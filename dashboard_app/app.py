@@ -31,7 +31,7 @@ fig.update_layout(
         "sourcetype": "raster",
         "source": {
             "type": "raster",
-            "tiles": ["https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"]
+            "tiles": ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"]
         }
     }],
     mapbox=dict(center=dict(lat=7.15, lon=-73.07), zoom=12),
