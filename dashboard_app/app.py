@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import folium
+from streamlit_folium import st_folium
 import os
 import numpy as np
 
@@ -18,26 +19,26 @@ if 'seleccion' not in st.session_state:
 
 st.subheader("📍 Ubicación Geográfica de Captaciones")
 
-fig = px.scatter_mapbox(
-    data_mapa, lat="lat", lon="lon", hover_name="Captación",
-    zoom=12, height=500, color_discrete_sequence=["#004a99"],
-    size=[12]*len(data_mapa)
-)
-fig.update_traces(marker=dict(size=14, symbol="circle"))
-fig.update_layout(
-    mapbox_style="white-bg",
-    mapbox_layers=[{
-        "below": "traces",
-        "sourcetype": "raster",
-        "source": {
-            "type": "raster",
-            "tiles": ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"]
-        }
-    }],
-    mapbox=dict(center=dict(lat=7.15, lon=-73.07), zoom=12),
-    margin={"r":0, "t":0, "l":0, "b":0}
-)
-st.plotly_chart(fig, use_container_width=True)
+m = folium.Map(location=[7.15, -73.07], zoom_start=12, tiles='https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', attr='Google')
+
+for idx, row in data_mapa.iterrows():
+    color = 'red' if row['Captación'] == st.session_state.seleccion else 'blue'
+    folium.Marker(
+        location=[row['lat'], row['lon']],
+        popup=f"<b>{row['Captación']}</b><br>Lat: {row['lat']:.5f}<br>Lon: {row['lon']:.5f}",
+        tooltip=row['Captación'],
+        icon=folium.Icon(color=color, icon='tint', prefix='fa')
+    ).add_to(m)
+
+map_data = st_folium(m, width=700, height=500)
+
+if map_data and map_data.get('last_object_clicked'):
+    clicked_lat = map_data['last_object_clicked']['lat']
+    clicked_lon = map_data['last_object_clicked']['lng']
+    for idx, row in data_mapa.iterrows():
+        if abs(clicked_lat - row['lat']) < 0.0005 and abs(clicked_lon - row['lon']) < 0.0005:
+            st.session_state.seleccion = row['Captación']
+            st.rerun()
 
 st.write("### 🗺️ Selecciona una captación:")
 cols = st.columns(6)
@@ -72,17 +73,13 @@ df = cargar_datos()
 coord_actual = data_mapa[data_mapa['Captación'] == st.session_state.seleccion].iloc[0]
 st.sidebar.caption(f"📍 {coord_actual['lat']:.5f}, {coord_actual['lon']:.5f}")
 
-st.sidebar.markdown("---")
-st.sidebar.subheader("🖼️ Vista de la Captación")
-img_path = f'assets/iconos/{st.session_state.seleccion.lower()}.png'
-if os.path.exists(img_path):
-    st.sidebar.image(img_path, use_container_width=True)
-
 col1, col2 = st.columns([1, 1.5])
 
 with col1:
     st.subheader(f"🏭 Infraestructura: {st.session_state.seleccion}")
-    st.info(f"📍 **Ubicación**\nLatitud: {coord_actual['lat']:.6f}\nLongitud: {coord_actual['lon']:.6f}")
+    st.info(f"📍 **Ubicación**
+Latitud: {coord_actual['lat']:.6f}
+Longitud: {coord_actual['lon']:.6f}")
 
 with col2:
     st.subheader("📊 Análisis de Calidad del Agua")
@@ -96,14 +93,13 @@ with col2:
             parametros_disponibles = [p for p in indicadores if p in data_filtered.columns]
             if parametros_disponibles:
                 variable = st.selectbox("📈 Parámetro de Calidad:", parametros_disponibles)
-                if 'Fecha' in data_filtered.columns:
-                    st.line_chart(data_filtered.set_index('Fecha')[variable], use_container_width=True)
+                st.line_chart(data_filtered.set_index('Fecha')[variable], use_container_width=True)
                 col_avg, col_min, col_max = st.columns(3)
                 col_avg.metric("Promedio", f"{data_filtered[variable].mean():.2f}")
                 col_min.metric("Mínimo", f"{data_filtered[variable].min():.2f}")
                 col_max.metric("Máximo", f"{data_filtered[variable].max():.2f}")
             else:
-                st.warning("No hay parámetros de calidad disponibles")
+                st.warning("No hay parámetros disponibles")
         else:
             st.warning(f"No hay datos para {st.session_state.seleccion}")
 
