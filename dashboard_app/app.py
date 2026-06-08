@@ -73,13 +73,17 @@ df = cargar_datos()
 coord_actual = data_mapa[data_mapa['Captación'] == st.session_state.seleccion].iloc[0]
 st.sidebar.caption(f"📍 {coord_actual['lat']:.5f}, {coord_actual['lon']:.5f}")
 
+st.sidebar.markdown("---")
+st.sidebar.subheader("🖼️ Vista de la Captación")
+img_path = f'assets/iconos/{st.session_state.seleccion.lower()}.png'
+if os.path.exists(img_path):
+    st.sidebar.image(img_path, use_container_width=True)
+
 col1, col2 = st.columns([1, 1.5])
 
 with col1:
     st.subheader(f"🏭 Infraestructura: {st.session_state.seleccion}")
-    st.info(f"📍 **Ubicación**
-Latitud: {coord_actual['lat']:.6f}
-Longitud: {coord_actual['lon']:.6f}")
+    st.info(f"📍 Ubicacion: Lat {coord_actual['lat']:.6f}, Lon {coord_actual['lon']:.6f}")
 
 with col2:
     st.subheader("📊 Análisis de Calidad del Agua")
@@ -93,6 +97,17 @@ with col2:
             parametros_disponibles = [p for p in indicadores if p in data_filtered.columns]
             if parametros_disponibles:
                 variable = st.selectbox("📈 Parámetro de Calidad:", parametros_disponibles)
+                
+                icono_path = f'assets/iconos/ico_{variable.lower()}.png'
+                if os.path.exists(icono_path):
+                    col_icono, col_titulo = st.columns([1, 5])
+                    with col_icono:
+                        st.image(icono_path, width=40)
+                    with col_titulo:
+                        st.markdown(f"### {variable}")
+                else:
+                    st.markdown(f"### {variable}")
+                
                 st.line_chart(data_filtered.set_index('Fecha')[variable], use_container_width=True)
                 col_avg, col_min, col_max = st.columns(3)
                 col_avg.metric("Promedio", f"{data_filtered[variable].mean():.2f}")
