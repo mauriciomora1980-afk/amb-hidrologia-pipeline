@@ -21,19 +21,17 @@ data_mapa = pd.DataFrame({
 # Mapa Interactivo
 st.subheader("Ubicación Geográfica de Captaciones")
 fig = px.scatter_mapbox(data_mapa, lat="lat", lon="lon", hover_name="Captación", 
-                        zoom=11, height=300, color_discrete_sequence=["#004a99"])
+                        zoom=11, height=400, color_discrete_sequence=["#004a99"])
 fig.update_layout(mapbox_style="satellite-streets", margin={"r":0,"t":0,"l":0,"b":0})
 
-# Usamos width='stretch' en lugar de use_container_width=True
-event = st.plotly_chart(fig, width='stretch', on_select="rerun")
+# Mostrar el mapa - eliminamos el on_select que no es válido
+st.plotly_chart(fig, use_container_width=True)
 
 # Estado de selección
 if 'seleccion' not in st.session_state:
     st.session_state.seleccion = "Golondrinas"
 
-if event and "selection" in event and len(event["selection"]["points"]) > 0:
-    st.session_state.seleccion = event["selection"]["points"][0]["hovertext"]
-
+# Selector en sidebar
 seleccion = st.sidebar.selectbox("Captación:", data_mapa['Captación'].tolist(), 
                                  index=data_mapa['Captación'].tolist().index(st.session_state.seleccion))
 st.session_state.seleccion = seleccion
@@ -48,22 +46,48 @@ with col1:
     st.subheader(f"Infraestructura: {seleccion}")
     img_path = f'assets/iconos/{seleccion.lower()}.png'
     if os.path.exists(img_path):
-        st.image(img_path, width='stretch')
+        st.image(img_path, use_container_width=True)
+    else:
+        st.info(f"No se encontró imagen para {seleccion}")
 
 with col2:
     st.subheader("Análisis de Calidad")
     if df is not None:
-        cols = df.select_dtypes(include=['number']).columns.tolist()
-        if cols:
-            variable = st.selectbox("Parámetro:", cols)
-            icon_path = f'assets/iconos/ico_{variable.lower()}.png'
-            if os.path.exists(icon_path):
-                st.image(icon_path, width=60)
-            
+        # Verificar que la columna 'Punto_Muestreo' existe
+        if 'Punto_Muestreo' in df.columns:
+            # Filtrar por la captación seleccionada
             data_filtered = df[df['Punto_Muestreo'] == seleccion]
+            
             if not data_filtered.empty:
-                st.line_chart(data_filtered.set_index('Fecha')[variable], width='stretch')
+                # Obtener columnas numéricas para análisis
+                cols = data_filtered.select_dtypes(include=['number']).columns.tolist()
+                # Excluir columnas que no son parámetros de calidad (como IDs)
+                cols = [col for col in cols if col not in ['ID', 'id', 'Index']]
+                
+                if cols:
+                    variable = st.selectbox("Parámetro:", cols)
+                    
+                    # Mostrar ícono del parámetro si existe
+                    icon_path = f'assets/iconos/ico_{variable.lower()}.png'
+                    if os.path.exists(icon_path):
+                        st.image(icon_path, width=60)
+                    
+                    # Gráfico de línea
+                    st.line_chart(data_filtered.set_index('Fecha')[variable] if 'Fecha' in data_filtered.columns 
+                                 else data_filtered[variable], use_container_width=True)
+                    
+                    # Mostrar estadísticas básicas
+                    with st.expander("📊 Estadísticas"):
+                        st.metric("Valor promedio", f"{data_filtered[variable].mean():.2f}")
+                        st.metric("Valor mínimo", f"{data_filtered[variable].min():.2f}")
+                        st.metric("Valor máximo", f"{data_filtered[variable].max():.2f}")
+                else:
+                    st.info("No hay parámetros numéricos para analizar.")
             else:
-                st.info("No hay datos disponibles para esta captación.")
+                st.info(f"No hay datos disponibles para {seleccion}.")
+        else:
+            st.error("La columna 'Punto_Muestreo' no existe en el archivo CSV. Verifica los nombres de las columnas.")
+            st.write("Columnas disponibles:", df.columns.tolist())
     else:
-        st.info("Esperando conexión a base de datos...")
+        st.info(f"Esperando conexión a base de datos... No se encontró el archivo en: {ruta_csv}")
+        st.write("Asegúrate de que el archivo MASTER_DATA_AMB.csv existe en la carpeta 'data/'")
