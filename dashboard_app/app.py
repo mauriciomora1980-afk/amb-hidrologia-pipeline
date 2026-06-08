@@ -40,7 +40,7 @@ fig.update_traces(
 )
 
 fig.update_layout(
-    mapbox_style="stamen-terrain",
+    mapbox_style="satellite-streets",
     mapbox=dict(
         center=dict(lat=7.15, lon=-73.07),
         zoom=12
