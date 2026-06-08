@@ -96,19 +96,21 @@ with col2:
             indicadores = ['ICA', 'ICOMI', 'ICOMO', 'ICOSUS', 'ICOpH', 'ICOTRO']
             parametros_disponibles = [p for p in indicadores if p in data_filtered.columns]
             if parametros_disponibles:
+                # Selector de parámetro
                 variable = st.selectbox("📈 Parámetro de Calidad:", parametros_disponibles)
                 
+                # Fila con ícono y gráfico
                 icono_path = f'assets/iconos/ico_{variable.lower()}.png'
                 if os.path.exists(icono_path):
-                    col_icono, col_titulo = st.columns([1, 5])
+                    col_icono, col_grafico = st.columns([1, 5])
                     with col_icono:
-                        st.image(icono_path, width=40)
-                    with col_titulo:
-                        st.markdown(f"### {variable}")
+                        st.image(icono_path, width=50)
+                    with col_grafico:
+                        st.line_chart(data_filtered.set_index('Fecha')[variable], use_container_width=True)
                 else:
-                    st.markdown(f"### {variable}")
+                    st.line_chart(data_filtered.set_index('Fecha')[variable], use_container_width=True)
                 
-                st.line_chart(data_filtered.set_index('Fecha')[variable], use_container_width=True)
+                # Métricas debajo
                 col_avg, col_min, col_max = st.columns(3)
                 col_avg.metric("Promedio", f"{data_filtered[variable].mean():.2f}")
                 col_min.metric("Mínimo", f"{data_filtered[variable].min():.2f}")
