@@ -9,11 +9,11 @@ Fecha,Parametro,Valor,Unidad,Sitio
 2015-11-05,Dureza total,100.0,mg CaCO3/L,Embalse
 2015-11-05,Coliformes totales,16000.0,,Embalse
 2015-11-05,pH,9.25,unidades de pH,Embalse
-2015-11-12,Coliformes totales,16000.0,,Embalse
-2015-11-12,pH,9.27,unidades de pH,Embalse
+2015-11-12,Conductividad,210.0,μs/cm,Embalse
 2015-11-12,Alcalinidad total,88.0,mg CaCO3/L,Embalse
 2015-11-12,Dureza total,99.2,mg CaCO3/L,Embalse
-2015-11-12,Conductividad,210.0,μs/cm,Embalse
+2015-11-12,Coliformes totales,16000.0,,Embalse
+2015-11-12,pH,9.27,unidades de pH,Embalse
 2015-11-19,pH,9.01,unidades de pH,Embalse
 2015-11-19,Dureza total,97.0,mg CaCO3/L,Embalse
 2015-11-19,Alcalinidad total,84.0,mg CaCO3/L,Embalse
@@ -24,11 +24,11 @@ Fecha,Parametro,Valor,Unidad,Sitio
 2015-12-28,Conductividad,233.0,μs/cm,Embalse
 2015-12-28,Coliformes totales,1600.0,,Embalse
 2015-12-28,Alcalinidad total,98.0,mg CaCO3/L,Embalse
-2016-01-07,Dureza total,106.0,mg CaCO3/L,Embalse
-2016-01-07,Coliformes totales,5400.0,,Embalse
+2016-01-07,Alcalinidad total,96.0,mg CaCO3/L,Embalse
 2016-01-07,Conductividad,226.0,μs/cm,Embalse
 2016-01-07,pH,8.28,unidades de pH,Embalse
-2016-01-07,Alcalinidad total,96.0,mg CaCO3/L,Embalse
+2016-01-07,Dureza total,106.0,mg CaCO3/L,Embalse
+2016-01-07,Coliformes totales,5400.0,,Embalse
 2016-02-03,pH,8.98,unidades de pH,Embalse
 2016-02-03,Coliformes totales,920.0,,Embalse
 2016-02-03,Dureza total,120.0,mg CaCO3/L,Embalse
@@ -39,11 +39,11 @@ Fecha,Parametro,Valor,Unidad,Sitio
 2016-03-28,Alcalinidad total,102.0,mg CaCO3/L,Embalse
 2016-03-28,pH,8.1,unidades de pH,Embalse
 2016-03-28,Coliformes totales,920.0,,Embalse
-2016-04-13,pH,8.4,unidades de pH,Embalse
-2016-04-13,Dureza total,113.0,mg CaCO3/L,Embalse
 2016-04-13,Conductividad,254.0,μs/cm,Embalse
-2016-04-13,Coliformes totales,920.0,,Embalse
 2016-04-13,Alcalinidad total,100.0,mg CaCO3/L,Embalse
+2016-04-13,Coliformes totales,920.0,,Embalse
+2016-04-13,Dureza total,113.0,mg CaCO3/L,Embalse
+2016-04-13,pH,8.4,unidades de pH,Embalse
 2016-05-06,Alcalinidad total,100.0,mg CaCO3/L,Embalse
 2016-05-06,Dureza total,113.0,mg CaCO3/L,Embalse
 2016-05-06,Coliformes totales,920.0,,Embalse
@@ -54,52 +54,65 @@ Fecha,Parametro,Valor,Unidad,Sitio
 2016-06-16,Dureza total,120.0,mg CaCO3/L,Embalse
 2016-06-16,Conductividad,248.0,μs/cm,Embalse
 2016-06-16,pH,8.56,unidades de pH,Embalse
-2016-07-07,Coliformes totales,540  x 10,,Embalse
-2016-07-07,Alcalinidad total,108.0,mg CaCO3/L,Embalse
+2016-07-07,Conductividad,252.0,μs/cm,Embalse
 2016-07-07,pH,8.73,unidades de pH,Embalse
 2016-07-07,Dureza total,128.0,mg CaCO3/L,Embalse
-2016-07-07,Conductividad,252.0,μs/cm,Embalse
+2016-07-07,Coliformes totales,540  x 10,,Embalse
+2016-07-07,Alcalinidad total,108.0,mg CaCO3/L,Embalse
 2016-08-03,pH,8.46,unidades de pH,Embalse
 2016-08-03,Alcalinidad total,106.0,mg CaCO3/L,Embalse
 2016-08-03,Conductividad,260.0,μs/cm,Embalse
 2016-08-03,Dureza total,116.0,mg CaCO3/L,Embalse
 2016-08-03,Coliformes totales,79.0,,Embalse
+2016-09-09,Alcalinidad total,108.0,mg CaCO3/L,Embalse
 2016-09-09,Conductividad,262.0,μs/cm,Embalse
 2016-09-09,pH,8.7,unidades de pH,Embalse
-2016-09-09,Alcalinidad total,108.0,mg CaCO3/L,Embalse
 2016-09-09,Coliformes totales,920.0,,Embalse
 2016-09-09,Dureza total,< 20,mg CaCO3/L,Embalse
-2017-03-03,pH,8.34,unidades de pH,Embalse
-2017-03-03,Dureza total,137.0,mg CaCO3/L,Embalse
+2017-03-03,Alcalinidad total,120.0,mg CaCO3/L,Embalse
 2017-03-03,Conductividad,254.0,μs/cm,Embalse
 2017-03-03,Coliformes totales,240 x 10,,Embalse
-2017-03-03,Alcalinidad total,120.0,mg CaCO3/L,Embalse
-2017-05-24,Dureza total,103.3,mg CaCO3/L,Embalse
-2017-05-24,pH,7.95,unidades de pH,Embalse
-2017-05-24,Alcalinidad total,84.0,mg CaCO3/L,Embalse
-2017-05-24,Coliformes totales,240.0,,Embalse
+2017-03-03,pH,8.34,unidades de pH,Embalse
+2017-03-03,Dureza total,137.0,mg CaCO3/L,Embalse
 2017-05-24,Conductividad,174.0,μs/cm,Embalse
+2017-05-24,Coliformes totales,240.0,,Embalse
+2017-05-24,Alcalinidad total,84.0,mg CaCO3/L,Embalse
+2017-05-24,pH,7.95,unidades de pH,Embalse
+2017-05-24,Dureza total,103.3,mg CaCO3/L,Embalse
 2017-11-09,Coliformes totales,790.0,,Embalse
 2017-11-09,pH,7.43,unidades de pH,Embalse
 2017-11-09,Conductividad,180.6,μs/cm,Embalse
 2017-11-09,Alcalinidad total,66.6,mg CaCO3/L,Embalse
 2017-11-09,Dureza total,68.0,mg CaCO3/L,Embalse
+2024-01-01,Conductividad,250.0,µS/cm,Centro embalse
+2024-01-01,pH,7.5,unidades de pH,Quebrada El Gualilo
+2024-01-01,Turbiedad,15.0,NTU,Quebrada El Gualilo
+2024-01-01,Coliformes totales,500.0,NMP/100ml,Centro embalse
+2024-01-01,Coliformes totales,800.0,NMP/100ml,Quebrada El Gualilo
+2024-01-01,Turbiedad,25.0,NTU,Quebrada Ranas
+2024-01-01,Turbiedad,8.0,NTU,Quebrada La Reforma
+2024-01-01,Coliformes totales,200.0,NMP/100ml,Quebrada La Reforma
+2024-01-01,pH,7.3,unidades de pH,Quebrada Ranas
+2024-01-01,Turbiedad,12.0,NTU,Centro embalse
+2024-01-01,pH,8.0,unidades de pH,Quebrada La Reforma
+2024-01-01,pH,7.8,unidades de pH,Centro embalse
+2024-01-01,Coliformes totales,1200.0,NMP/100ml,Quebrada Ranas
+2026-04-08,Dureza total,91.6,mg CaCO3/L,Captación Embalse - 10m
 2026-04-08,pH,7.53,unidades de pH,Captación
 2026-04-08,Alcalinidad total,89.2,mg CaCO3/L,Captación
-2026-04-08,Coliformes totales,46.0,NMP/100ml,Captación
 2026-04-08,Dureza total,96.7,mg CaCO3/L,Captación
 2026-04-08,Turbiedad,50.0,NTU,Captación
 2026-04-08,Conductividad,208.0,µS/cm,Captación
 2026-04-08,Mercurio,0.00025,mg/L,Captación Embalse - 10m
 2026-04-08,Turbiedad,21.0,NTU,Captación Embalse - 10m
+2026-04-08,Arsénico,0.003,mg/L,Captación Embalse - 10m
 2026-04-08,pH,7.98,unidades de pH,Captación Embalse - 10m
-2026-04-08,Conductividad,203.0,µS/cm,Captación Embalse - 10m
 2026-04-08,Coliformes totales,79.0,NMP/100ml,Captación Embalse - 10m
 2026-04-08,Alcalinidad total,87.6,mg CaCO3/L,Captación Embalse - 10m
-2026-04-08,Arsénico,0.003,mg/L,Captación Embalse - 10m
-2026-04-08,Dureza total,91.6,mg CaCO3/L,Captación Embalse - 10m
-2026-04-14,Arsénico,0.005,mg/L,Cola Embalse
-2026-04-14,Dureza total,88.2,mg CaCO3/L,Cola Embalse
-2026-04-14,Alcalinidad total,93.6,mg CaCO3/L,Cola Embalse
-2026-04-14,Coliformes totales,1600.0,NMP/100ml,Cola Embalse
+2026-04-08,Conductividad,203.0,µS/cm,Captación Embalse - 10m
+2026-04-08,Coliformes totales,46.0,NMP/100ml,Captación
 2026-04-14,Turbiedad,150.0,NTU,Cola Embalse
+2026-04-14,Coliformes totales,1600.0,NMP/100ml,Cola Embalse
+2026-04-14,Alcalinidad total,93.6,mg CaCO3/L,Cola Embalse
+2026-04-14,Dureza total,88.2,mg CaCO3/L,Cola Embalse
+2026-04-14,Arsénico,0.005,mg/L,Cola Embalse
