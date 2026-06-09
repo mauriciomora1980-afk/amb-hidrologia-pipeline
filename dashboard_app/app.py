@@ -4,7 +4,7 @@ import plotly.express as px
 import os
 
 st.set_page_config(page_title="Monitoreo AMB", layout="wide")
-st.title("💧 Sistema de Monitoreo de Calidad de Agua - AMB")
+st.title("💧 Sistema de Monitoreo de Calidad de Agua")
 
 # ================= DIAGNÓSTICO: VERIFICAR ARCHIVOS =================
 st.sidebar.markdown("### 🔧 Depuración")
