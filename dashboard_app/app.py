@@ -130,41 +130,26 @@ elif pagina == "4️⃣ Embalse":
     st.subheader("💧 Monitoreo Histórico del Embalse (2015-2026)")
     
     if not df_embalse.empty:
-        col1, col2 = st.columns(2)
+        # Variables comunes con continuidad
+        variables_comunes = ['pH', 'Turbiedad', 'Coliformes totales', 'Conductividad', 
+                            'Alcalinidad total', 'Dureza total', 'Arsénico', 'Mercurio']
+        
+        # Obtener años disponibles
+        años_disponibles = sorted(df_embalse['Fecha'].dt.year.unique())
+        
+        col1, col2, col3 = st.columns(3)
         with col1:
-            parametro = st.selectbox("📊 Seleccionar parámetro", df_embalse['Parametro'].unique())
+            año = st.selectbox("📅 Seleccionar año", ['Todos'] + años_disponibles)
         with col2:
+            parametro = st.selectbox("📊 Seleccionar parámetro", variables_comunes)
+        with col3:
             sitio = st.selectbox("📍 Seleccionar sitio", ['Todos'] + sorted(df_embalse['Sitio'].unique()))
         
         df_filtrado = df_embalse[df_embalse['Parametro'] == parametro]
+        if año != 'Todos':
+            df_filtrado = df_filtrado[df_filtrado['Fecha'].dt.year == año]
         if sitio != 'Todos':
             df_filtrado = df_filtrado[df_filtrado['Sitio'] == sitio]
-        
-        if not df_filtrado.empty:
-            # Convertir valores a numérico
-            df_filtrado['Valor'] = pd.to_numeric(df_filtrado['Valor'], errors='coerce')
-            df_filtrado = df_filtrado.dropna(subset=['Valor'])
-            
-            if not df_filtrado.empty:
-                fig = px.line(df_filtrado, x='Fecha', y='Valor', color='Sitio' if sitio == 'Todos' else None,
-                              title=f'{parametro} - Evolución {sitio if sitio != "Todos" else "todos los sitios"}',
-                              markers=True)
-                st.plotly_chart(fig, use_container_width=True)
-                
-                # Métricas
-                col_avg, col_min, col_max = st.columns(3)
-                col_avg.metric("Promedio", f"{df_filtrado['Valor'].mean():.2f}")
-                col_min.metric("Mínimo", f"{df_filtrado['Valor'].min():.2f}")
-                col_max.metric("Máximo", f"{df_filtrado['Valor'].max():.2f}")
-                
-                with st.expander("📋 Ver todos los datos"):
-                    st.dataframe(df_filtrado, use_container_width=True)
-            else:
-                st.warning("No hay datos numéricos para este parámetro")
-        else:
-            st.warning("No hay datos para la combinación seleccionada")
-    else:
-        st.error("No se pudieron cargar los datos del embalse")
     
     st.caption("📌 Datos históricos: 2015-2017 (Excel) | Datos recientes: 2026 (Laboratorio AMB)")
 
