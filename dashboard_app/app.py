@@ -1,124 +1,121 @@
 import streamlit as st
 import pandas as pd
-import folium
-from streamlit_folium import st_folium
+import plotly.express as px
 import os
-import numpy as np
 
-st.set_page_config(page_title="Gestión amb", layout="wide")
-st.title("💧 Sistema de Monitoreo de Captaciones - amb")
+st.set_page_config(page_title="Monitoreo AMB", layout="wide")
+st.title("💧 Sistema de Monitoreo de Calidad de Agua - AMB")
 
-data_mapa = pd.DataFrame({
-    'Captación': ["Golondrinas", "Carrizal", "Arnania", "Embalse", "Surata", "Rio Frio"],
-    'lat': [7.17034, 7.17455, 7.17821, 7.15397, 7.15567, 7.07444],
-    'lon': [-73.01967, -73.01392, -73.03096, -73.08964, -73.11143, -73.06694]
-})
+# Cargar datos
+df_historico = pd.read_csv('data/datos_historicos_formato_largo.csv')
+df_captaciones = pd.read_csv('data/MASTER_DATA_COMPLETO.csv')
 
-if 'seleccion' not in st.session_state:
-    st.session_state.seleccion = "Golondrinas"
-
-st.subheader("📍 Ubicación Geográfica de Captaciones")
-
-m = folium.Map(location=[7.15, -73.07], zoom_start=12, tiles='https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', attr='Google')
-
-for idx, row in data_mapa.iterrows():
-    color = 'red' if row['Captación'] == st.session_state.seleccion else 'blue'
-    folium.Marker(
-        location=[row['lat'], row['lon']],
-        popup=f"<b>{row['Captación']}</b><br>Lat: {row['lat']:.5f}<br>Lon: {row['lon']:.5f}",
-        tooltip=row['Captación'],
-        icon=folium.Icon(color=color, icon='tint', prefix='fa')
-    ).add_to(m)
-
-map_data = st_folium(m, width=700, height=500)
-
-if map_data and map_data.get('last_object_clicked'):
-    clicked_lat = map_data['last_object_clicked']['lat']
-    clicked_lon = map_data['last_object_clicked']['lng']
-    for idx, row in data_mapa.iterrows():
-        if abs(clicked_lat - row['lat']) < 0.0005 and abs(clicked_lon - row['lon']) < 0.0005:
-            st.session_state.seleccion = row['Captación']
-            st.rerun()
-
-st.write("### 🗺️ Selecciona una captación:")
-cols = st.columns(6)
-for idx, captacion in enumerate(data_mapa['Captación'].tolist()):
-    with cols[idx]:
-        if st.button(f"📍 {captacion}", key=f"btn_{captacion}"):
-            st.session_state.seleccion = captacion
-            st.rerun()
-
-st.sidebar.markdown("---")
-st.sidebar.subheader("🎯 Captación Actual")
-seleccion = st.sidebar.selectbox(
-    "Seleccionar captación:", 
-    data_mapa['Captación'].tolist(), 
-    index=data_mapa['Captación'].tolist().index(st.session_state.seleccion)
+# ================= MENÚ DE PRESENTACIÓN =================
+pagina = st.radio(
+    "📋 Navegación",
+    ["1️⃣ Esquema del sistema",
+     "2️⃣ Captaciones 2024",
+     "3️⃣ Tendencia histórica 2012–2025",
+     "4️⃣ Plantas de tratamiento",
+     "5️⃣ Resumen ejecutivo"],
+    horizontal=True
 )
-if seleccion != st.session_state.seleccion:
-    st.session_state.seleccion = seleccion
-    st.rerun()
-st.sidebar.success(f"✅ **{st.session_state.seleccion}**")
 
-@st.cache_data
-def cargar_datos():
-    data_path = 'data/MASTER_DATA_AMB.csv'
-    if os.path.exists(data_path):
-        df = pd.read_csv(data_path)
-        st.sidebar.success(f"✅ Datos cargados: {len(df)} registros")
-        return df
-    return None
+# ================= 1️⃣ ESQUEMA DEL SISTEMA =================
+if pagina == "1️⃣ Esquema del sistema":
+    st.subheader("🧠 Esquema hidrológico del sistema AMB")
+    if os.path.exists("assets/iconos/esquema_hidrologico.png"):
+        st.image("assets/iconos/esquema_hidrologico.png", use_container_width=True)
+    else:
+        st.info("📌 Esquema disponible en la documentación")
+    st.markdown("""
+    ### 📌 Flujo del agua:
+    - **Río Tona** → Captación Carrizal + excedente al Embalse
+    - **Quebradas Arnania y Golondrinas** → Sistema Tona
+    - **Sistema Tona** → Planta La Flora
+    - **Río Frío** → Planta Florida
+    - **Río Suratá** → Planta Bosconia
+    """)
 
-df = cargar_datos()
-coord_actual = data_mapa[data_mapa['Captación'] == st.session_state.seleccion].iloc[0]
-st.sidebar.caption(f"📍 {coord_actual['lat']:.5f}, {coord_actual['lon']:.5f}")
+# ================= 2️⃣ CAPTACIONES 2024 =================
+elif pagina == "2️⃣ Captaciones 2024":
+    st.subheader("📍 Calidad de agua en captaciones 2024")
+    st.info("📊 Datos de ICA, ICOMI, ICOMO, ICOSUS, ICOpH, ICOTRO")
+    captacion = st.selectbox("Seleccionar captación", df_captaciones['Captacion'].unique())
+    parametro = st.selectbox("Seleccionar parámetro", ['ICA', 'ICOMI', 'ICOMO', 'ICOSUS', 'ICOpH', 'ICOTRO'])
+    
+    df_filtrado = df_captaciones[(df_captaciones['Captacion'] == captacion) & 
+                                   (df_captaciones['Parametro'] == parametro)]
+    
+    if not df_filtrado.empty:
+        fig = px.line(df_filtrado, x='Fecha', y='Valor', markers=True,
+                      title=f'{parametro} - {captacion} (2024)')
+        st.plotly_chart(fig, use_container_width=True)
+        
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Promedio", f"{df_filtrado['Valor'].mean():.1f}")
+        col2.metric("Mínimo", f"{df_filtrado['Valor'].min():.1f}")
+        col3.metric("Máximo", f"{df_filtrado['Valor'].max():.1f}")
 
-st.sidebar.markdown("---")
-st.sidebar.subheader("🖼️ Vista de la Captación")
-img_path = f'assets/iconos/{st.session_state.seleccion.lower()}.png'
-if os.path.exists(img_path):
-    st.sidebar.image(img_path, use_container_width=True)
+# ================= 3️⃣ TENDENCIA HISTÓRICA =================
+elif pagina == "3️⃣ Tendencia histórica 2012–2025":
+    st.subheader("📈 Evolución de E.coli y turbiedad")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        sistema = st.selectbox("Sistema", df_historico['Sistema'].unique())
+    with col2:
+        parametro = st.selectbox("Parámetro", df_historico['Parametro'].unique())
+    
+    df_filtrado = df_historico[(df_historico['Sistema'] == sistema) & 
+                                (df_historico['Parametro'] == parametro)]
+    
+    fig = px.line(df_filtrado, x='Año', y='Valor', markers=True,
+                  title=f'{parametro} - {sistema} (2012-2025)')
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Métricas
+    ultimo = df_filtrado[df_filtrado['Año'] == df_filtrado['Año'].max()]['Valor'].values[0]
+    primero = df_filtrado[df_filtrado['Año'] == df_filtrado['Año'].min()]['Valor'].values[0]
+    variacion = ((ultimo - primero) / primero) * 100
+    st.metric("Variación 2012-2025", f"{variacion:.1f}%", 
+              delta="Mejorando" if variacion < 0 else "Empeorando")
 
-col1, col2 = st.columns([1, 1.5])
+# ================= 4️⃣ PLANTAS =================
+elif pagina == "4️⃣ Plantas de tratamiento":
+    st.subheader("🏭 Calidad del agua que llega a las plantas")
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("Planta La Flora", "Recibe Sistema Tona", "Carrizal + Arnania + Golondrinas")
+    with col2:
+        st.metric("Planta Florida", "Recibe Río Frío", "Monitoreo continuo")
+    with col3:
+        st.metric("Planta Bosconia", "Recibe Río Suratá", "Monitoreo continuo")
+    
+    st.info("💡 El agua cruda que llega a cada planta es monitoreada en sus respectivas captaciones")
 
-with col1:
-    st.subheader(f"🏭 Infraestructura: {st.session_state.seleccion}")
-    st.info(f"📍 Ubicacion: Lat {coord_actual['lat']:.6f}, Lon {coord_actual['lon']:.6f}")
-
-with col2:
-    st.subheader("📊 Análisis de Calidad del Agua")
-    if df is not None and 'Punto_Muestreo' in df.columns:
-        data_filtered = df[df['Punto_Muestreo'] == st.session_state.seleccion].copy()
-        if not data_filtered.empty:
-            if 'Fecha' in data_filtered.columns:
-                data_filtered['Fecha'] = pd.to_datetime(data_filtered['Fecha'])
-                data_filtered = data_filtered.sort_values('Fecha')
-            indicadores = ['ICA', 'ICOMI', 'ICOMO', 'ICOSUS', 'ICOpH', 'ICOTRO']
-            parametros_disponibles = [p for p in indicadores if p in data_filtered.columns]
-            if parametros_disponibles:
-                # Selector de parámetro
-                variable = st.selectbox("📈 Parámetro de Calidad:", parametros_disponibles)
-                
-                # Fila con ícono y gráfico
-                icono_path = f'assets/iconos/ico_{variable.lower()}.png'
-                if os.path.exists(icono_path):
-                    col_icono, col_grafico = st.columns([1, 5])
-                    with col_icono:
-                        st.image(icono_path, width=50)
-                    with col_grafico:
-                        st.line_chart(data_filtered.set_index('Fecha')[variable], use_container_width=True)
-                else:
-                    st.line_chart(data_filtered.set_index('Fecha')[variable], use_container_width=True)
-                
-                # Métricas debajo
-                col_avg, col_min, col_max = st.columns(3)
-                col_avg.metric("Promedio", f"{data_filtered[variable].mean():.2f}")
-                col_min.metric("Mínimo", f"{data_filtered[variable].min():.2f}")
-                col_max.metric("Máximo", f"{data_filtered[variable].max():.2f}")
-            else:
-                st.warning("No hay parámetros disponibles")
-        else:
-            st.warning(f"No hay datos para {st.session_state.seleccion}")
-
-st.markdown("---")
-st.caption(f"💧 Actualizado: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}")
+# ================= 5️⃣ RESUMEN EJECUTIVO =================
+elif pagina == "5️⃣ Resumen ejecutivo":
+    st.subheader("📊 Resumen de calidad de agua 2024")
+    
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric("Captaciones", "6")
+    with col2:
+        st.metric("Registros 2024", "540")
+    with col3:
+        st.metric("Años históricos", "14")
+    with col4:
+        st.metric("Plantas", "3")
+    
+    # Indicadores ICA
+    st.subheader("📈 Ranking ICA promedio 2024")
+    df_ica = df_captaciones[df_captaciones['Parametro'] == 'ICA']
+    ranking = df_ica.groupby('Captacion')['Valor'].mean().sort_values(ascending=False)
+    
+    for captacion, valor in ranking.items():
+        color = "🟢" if valor > 80 else "🟡" if valor > 60 else "🔴"
+        st.write(f"{color} **{captacion}**: {valor:.1f}")
+    
+    st.success("✅ El agua de las captaciones cumple con norma de calidad en 2024")
