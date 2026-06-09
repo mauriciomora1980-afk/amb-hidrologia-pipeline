@@ -114,41 +114,48 @@ elif pagina == "4️⃣ Embalse":
     df_embalse = pd.read_csv('data/datos_embalse_completo.csv')
     df_embalse['Fecha'] = pd.to_datetime(df_embalse['Fecha'])
     
-    # Selectores
-    col1, col2 = st.columns(2)
-    with col1:
-        parametro = st.selectbox("📊 Seleccionar parámetro", df_embalse['Parametro'].unique())
-    with col2:
-        sitio = st.selectbox("📍 Seleccionar sitio", ['Todos'] + sorted(df_embalse['Sitio'].unique()))
-    
-    # Filtrar datos
-    df_filtrado = df_embalse[df_embalse['Parametro'] == parametro]
-    if sitio != 'Todos':
-        df_filtrado = df_filtrado[df_filtrado['Sitio'] == sitio]
-    
-    if not df_filtrado.empty:
-        # Gráfico de evolución
-        fig = px.line(df_filtrado, x='Fecha', y='Valor', color='Sitio' if sitio == 'Todos' else None,
-                      title=f'{parametro} - Evolución {sitio if sitio != "Todos" else "todos los sitios"}',
-                      markers=True)
-        st.plotly_chart(fig, use_container_width=True)
+    if not df_embalse.empty:
+        # Variables comunes con continuidad
+        variables_comunes = ['pH', 'Turbiedad', 'Coliformes totales', 'Conductividad', 
+                            'Alcalinidad total', 'Dureza total', 'Arsénico', 'Mercurio']
         
-        # Métricas
-        col_avg, col_min, col_max = st.columns(3)
-        col_avg.metric("Promedio", f"{df_filtrado['Valor'].mean():.2f}")
-        col_min.metric("Mínimo", f"{df_filtrado['Valor'].min():.2f}")
-        col_max.metric("Máximo", f"{df_filtrado['Valor'].max():.2f}")
+        col1, col2 = st.columns(2)
+        with col1:
+            parametro = st.selectbox("📊 Seleccionar parámetro (común histórico-actual)", variables_comunes)
+        with col2:
+            sitio = st.selectbox("📍 Seleccionar sitio", ['Todos'] + sorted(df_embalse['Sitio'].unique()))
         
-        # Tabla de datos
-        with st.expander("📋 Ver todos los datos"):
-            st.dataframe(df_filtrado, use_container_width=True)
+        df_filtrado = df_embalse[df_embalse['Parametro'] == parametro]
+        if sitio != 'Todos':
+            df_filtrado = df_filtrado[df_filtrado['Sitio'] == sitio]
+        
+        if not df_filtrado.empty:
+            # Convertir valores a numérico
+            df_filtrado['Valor'] = pd.to_numeric(df_filtrado['Valor'], errors='coerce')
+            df_filtrado = df_filtrado.dropna(subset=['Valor'])
+            
+            if not df_filtrado.empty:
+                fig = px.line(df_filtrado, x='Fecha', y='Valor', color='Sitio' if sitio == 'Todos' else None,
+                              title=f'{parametro} - Evolución {sitio if sitio != "Todos" else "todos los sitios"}',
+                              markers=True)
+                st.plotly_chart(fig, use_container_width=True)
+                
+                # Métricas
+                col_avg, col_min, col_max = st.columns(3)
+                col_avg.metric("Promedio", f"{df_filtrado['Valor'].mean():.2f}")
+                col_min.metric("Mínimo", f"{df_filtrado['Valor'].min():.2f}")
+                col_max.metric("Máximo", f"{df_filtrado['Valor'].max():.2f}")
+                
+                with st.expander("📋 Ver todos los datos"):
+                    st.dataframe(df_filtrado, use_container_width=True)
+            else:
+                st.warning("No hay datos numéricos para este parámetro")
+        else:
+            st.warning("No hay datos para la combinación seleccionada")
     else:
-        st.warning("No hay datos para la combinación seleccionada")
+        st.error("No se pudieron cargar los datos del embalse")
     
-    # Nota sobre los datos
-    st.caption("📌 Datos históricos: 2015-2017 (Excel) | Datos recientes: 2026 (Laboratorio AMB)")
-
-elif pagina == "5️⃣ Plantas de tratamiento":
+    st.caption("📌 Datos históricos: 2015-2017 (Excel) | Datos recientes: 2026 (Laboratorio AMB)")elif pagina == "5️⃣ Plantas de tratamiento":
     st.subheader("🏭 Calidad del agua que llega a las plantas")
     col1, col2, col3 = st.columns(3)
     with col1:
