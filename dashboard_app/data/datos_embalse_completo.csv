@@ -1,374 +1,105 @@
 Fecha,Parametro,Valor,Unidad,Sitio
 2015-10-06,pH,8.73,unidades de pH,Embalse
-2015-10-06,Cloruros,14.6,mg Cl-/L,Embalse
 2015-10-06,Coliformes totales,1600.0,,Embalse
-2015-10-06,Color Verdadero,15.0,Unidades Pt-Co,Embalse
-2015-10-06,Sulfatos,< 10.0,mg SO4/L,Embalse
 2015-10-06,Alcalinidad total,124.0,mg CaCO3/L,Embalse
-2015-10-06,Nitritos,0.017,mg NO-2 - N/L,Embalse
 2015-10-06,Dureza total,130.0,mg CaCO3/L,Embalse
 2015-10-06,Conductividad,322.0,μs/cm,Embalse
-2015-10-06,Nitratos,< 0.4,mg NO-3 - N/L,Embalse
-2015-10-06,Turbidez ,12.0,NTU,Embalse
-2015-11-05,Hierro total,< 0.12,mg Fe/L,Embalse
-2015-11-05,Turbidez ,10.0,NTU,Embalse
-2015-11-05,Cloruros,7.6,mg Cl-/L,Embalse
-2015-11-05,Nitritos,< 0.008,mg NO-2 - N/L,Embalse
 2015-11-05,Alcalinidad total,92.0,mg CaCO3/L,Embalse
 2015-11-05,Conductividad,227.0,μs/cm,Embalse
 2015-11-05,Dureza total,100.0,mg CaCO3/L,Embalse
 2015-11-05,Coliformes totales,16000.0,,Embalse
-2015-11-05,Sulfatos,< 10,mg SO4/L,Embalse
-2015-11-05,Color Verdadero,30.0,Unidades Pt-Co,Embalse
 2015-11-05,pH,9.25,unidades de pH,Embalse
-2015-11-05,Nitratos,< 0.40,mg NO-3 - N/L,Embalse
-2015-11-12,Color Verdadero,28.0,Unidades Pt-Co,Embalse
 2015-11-12,Coliformes totales,16000.0,,Embalse
-2015-11-12,Nitritos,< 0.008,mg NO-2 - N/L,Embalse
 2015-11-12,pH,9.27,unidades de pH,Embalse
-2015-11-12,Sulfatos,< 10,mg SO4/L,Embalse
-2015-11-12,Turbidez ,5.0,NTU,Embalse
 2015-11-12,Alcalinidad total,88.0,mg CaCO3/L,Embalse
-2015-11-12,Cloruros,6.5,mg Cl-/L,Embalse
 2015-11-12,Dureza total,99.2,mg CaCO3/L,Embalse
-2015-11-12,Nitratos,< 0.40,mg NO-3 - N/L,Embalse
-2015-11-12,Hierro total, < 0.12,mg Fe/L,Embalse
 2015-11-12,Conductividad,210.0,μs/cm,Embalse
-2015-11-19,Cloruros,4.9,mg Cl-/L,Embalse
-2015-11-19,Nitratos,< 0.40,mg NO-3 - N/L,Embalse
 2015-11-19,pH,9.01,unidades de pH,Embalse
-2015-11-19,Color Verdadero,27.0,Unidades Pt-Co,Embalse
-2015-11-19,Sulfatos,< 10,mg SO4/L,Embalse
-2015-11-19,Turbidez ,2.7,NTU,Embalse
-2015-11-19,Nitritos,< 0.008,mg NO-2 - N/L,Embalse
-2015-11-19,Hierro total,< 0.12,mg Fe/L,Embalse
 2015-11-19,Dureza total,97.0,mg CaCO3/L,Embalse
 2015-11-19,Alcalinidad total,84.0,mg CaCO3/L,Embalse
 2015-11-19,Conductividad,207.0,μs/cm,Embalse
 2015-11-19,Coliformes totales,1600.0,,Embalse
-2015-12-28,Nitritos,< 0.008,mg NO-2 - N/L,Embalse
 2015-12-28,Dureza total,96.0,mg CaCO3/L,Embalse
 2015-12-28,pH,8.07,unidades de pH,Embalse
-2015-12-28,Nitratos,< 0.40,mg NO-3 - N/L,Embalse
-2015-12-28,Sólidos totales,143.0,mg/L,Embalse
-2015-12-28,Turbidez ,0.7,NTU,Embalse
 2015-12-28,Conductividad,233.0,μs/cm,Embalse
-2015-12-28,Sulfatos,< 10,mg SO4/L,Embalse
-2015-12-28,Color Verdadero,14.0,Unidades Pt-Co,Embalse
 2015-12-28,Coliformes totales,1600.0,,Embalse
 2015-12-28,Alcalinidad total,98.0,mg CaCO3/L,Embalse
-2015-12-28,Hierro total,0.25,mg Fe/L,Embalse
-2015-12-28,Cloruros,5.4,mg Cl-/L,Embalse
-2016-01-07,Nitratos,< 0.40,mg NO-3 - N/L,Embalse
-2016-01-07,Hierro total,0.3,mg Fe/L,Embalse
 2016-01-07,Dureza total,106.0,mg CaCO3/L,Embalse
-2016-01-07,Nitritos,< 0.008,mg NO-2 - N/L,Embalse
-2016-01-07,Cloruros,6.0,mg Cl-/L,Embalse
-2016-01-07,Color Verdadero,15.0,Unidades Pt-Co,Embalse
 2016-01-07,Coliformes totales,5400.0,,Embalse
-2016-01-07,Sulfatos,< 10,mg SO4/L,Embalse
-2016-01-07,Turbidez ,1.2,NTU,Embalse
 2016-01-07,Conductividad,226.0,μs/cm,Embalse
 2016-01-07,pH,8.28,unidades de pH,Embalse
-2016-01-07,Sólidos totales,146.0,mg/L,Embalse
 2016-01-07,Alcalinidad total,96.0,mg CaCO3/L,Embalse
 2016-02-03,pH,8.98,unidades de pH,Embalse
-2016-02-03,Color Verdadero,5.0,Unidades Pt-Co,Embalse
-2016-02-03,Nitratos,< 0.40,mg NO-3 - N/L,Embalse
-2016-02-03,Turbidez ,2.0,NTU,Embalse
 2016-02-03,Coliformes totales,920.0,,Embalse
 2016-02-03,Dureza total,120.0,mg CaCO3/L,Embalse
-2016-02-03,Sulfatos,16.4,mg SO4/L,Embalse
 2016-02-03,Conductividad,231.0,μs/cm,Embalse
-2016-02-03,Nitritos,0.01,mg NO-2 - N/L,Embalse
 2016-02-03,Alcalinidad total,116.0,mg CaCO3/L,Embalse
-2016-03-28,Color Verdadero,16.0,Unidades Pt-Co,Embalse
 2016-03-28,Dureza total,106.0,mg CaCO3/L,Embalse
-2016-03-28,Sulfatos,< 10,mg SO4/L,Embalse
-2016-03-28,Cromo total,< 0.12,mg Cr /L,Embalse
-2016-03-28,Nitratos,< 0.4,mg NO-3 - N/L,Embalse
-2016-03-28,Nitrógeno amoniacal,0.32,mg N/L,Embalse
-2016-03-28,DQO,38.2,mg O2/L,Embalse
-2016-03-28,Nitritos,< 0.008,mg NO-2 - N/L,Embalse
-2016-03-28,DBO5,< 2.6,mg O2/L,Embalse
-2016-03-28,Plomo total,< 0.15,mg Pb/L,Embalse
 2016-03-28,Conductividad,262.0,μs/cm,Embalse
-2016-03-28,Sólidos totales,181.0,mg/L,Embalse
 2016-03-28,Alcalinidad total,102.0,mg CaCO3/L,Embalse
 2016-03-28,pH,8.1,unidades de pH,Embalse
-2016-03-28,Arsénico total ,< 0.45,mg As/L,Embalse
-2016-03-28,Hierro total,< 0.12,mg Fe/L,Embalse
-2016-03-28,Cobre total,< 0.04,mg Cu/L,Embalse
-2016-03-28,Zinc total,< 0.025,mg Zn/L,Embalse
-2016-03-28,Sólidos disueltos totales ,169.0,mg/L,Embalse
-2016-03-28,Cloruros,7.4,mg Cl-/L,Embalse
 2016-03-28,Coliformes totales,920.0,,Embalse
-2016-03-28,Mercurio total,< 0.60,mg Hg/L,Embalse
-2016-03-28,Sílice ,6.6,mg/L,Embalse
-2016-03-28,Turbidez ,3.2,NTU,Embalse
-2016-03-28,Fluoruros ,< 0.13,mg/L,Embalse
-2016-03-28,Sólidos suspendidos totales,12.0,mg/L,Embalse
-2016-04-13,Sulfatos,< 10,mg SO4/L,Embalse
-2016-04-13,Hierro total,0.15,mg Fe/L,Embalse
 2016-04-13,pH,8.4,unidades de pH,Embalse
 2016-04-13,Dureza total,113.0,mg CaCO3/L,Embalse
-2016-04-13,Nitratos,< 0.4,mg NO-3 - N/L,Embalse
-2016-04-13,Mercurio total,< 0.60,mg Hg/L,Embalse
-2016-04-13,Zinc total,< 0.025,mg Zn/L,Embalse
 2016-04-13,Conductividad,254.0,μs/cm,Embalse
-2016-04-13,Fluoruros ,< 0.13,mg/L,Embalse
-2016-04-13,Turbidez ,4.6,NTU,Embalse
-2016-04-13,DQO,23.9,mg O2/L,Embalse
 2016-04-13,Coliformes totales,920.0,,Embalse
 2016-04-13,Alcalinidad total,100.0,mg CaCO3/L,Embalse
-2016-04-13,DBO5,< 2.6,mg O2/L,Embalse
-2016-04-13,Sólidos totales,173.0,mg/L,Embalse
-2016-04-13,Cloruros,8.3,mg Cl-/L,Embalse
-2016-04-13,Sólidos suspendidos totales,7.0,mg/L,Embalse
-2016-04-13,Sólidos disueltos totales ,166.0,mg/L,Embalse
-2016-04-13,Cobre total,< 0.04,mg Cu/L,Embalse
-2016-04-13,Arsénico total ,< 0.45,mg As/L,Embalse
-2016-04-13,Color Verdadero,12.3,Unidades Pt-Co,Embalse
-2016-04-13,Plomo total,< 0.15,mg Pb/L,Embalse
-2016-04-13,Cromo total,< 0.12,mg Cr /L,Embalse
-2016-04-13,Nitrógeno amoniacal,0.68,mg N/L,Embalse
-2016-04-13,Sílice ,8.6,mg/L,Embalse
-2016-04-13,Nitritos,0.011,mg NO-2 - N/L,Embalse
-2016-05-06,Cromo total,< 0.12,mg Cr /L,Embalse
-2016-05-06,Sólidos disueltos totales ,162.0,mg/L,Embalse
-2016-05-06,Mercurio total,< 0.60,mg Hg/L,Embalse
-2016-05-06,Nitritos,0.013,mg NO-2 - N/L,Embalse
-2016-05-06,Sólidos suspendidos totales,10.0,mg/L,Embalse
-2016-05-06,DQO,< 20,mg O2/L,Embalse
-2016-05-06,Fluoruros ,< 0.13,mg/L,Embalse
-2016-05-06,Cobre total,< 0.04,mg Cu/L,Embalse
 2016-05-06,Alcalinidad total,100.0,mg CaCO3/L,Embalse
-2016-05-06,Sílice ,6.1,mg/L,Embalse
-2016-05-06,Turbidez ,2.5,NTU,Embalse
-2016-05-06,Sólidos totales,172.0,mg/L,Embalse
-2016-05-06,Cloruros,6.3,mg Cl-/L,Embalse
-2016-05-06,DBO5,< 2.6,mg O2/L,Embalse
-2016-05-06,Arsénico total ,< 0.45,mg As/L,Embalse
 2016-05-06,Dureza total,113.0,mg CaCO3/L,Embalse
-2016-05-06,Sulfatos,< 10,mg SO4/L,Embalse
 2016-05-06,Coliformes totales,920.0,,Embalse
-2016-05-06,Color Verdadero,40.0,Unidades Pt-Co,Embalse
-2016-05-06,Plomo total,< 0.15,mg Pb/L,Embalse
-2016-05-06,Hierro total,0.22,mg Fe/L,Embalse
-2016-05-06,Nitrógeno amoniacal,0.72,mg N/L,Embalse
-2016-05-06,Nitratos,< 0.40,mg NO-3 - N/L,Embalse
 2016-05-06,Conductividad,257.0,μs/cm,Embalse
-2016-05-06,Zinc total,< 0.025,mg Zn/L,Embalse
 2016-05-06,pH,7.98,unidades de pH,Embalse
-2016-06-16,Sólidos suspendidos totales,9.0,mg/L,Embalse
-2016-06-16,Sílice ,6.3,mg/L,Embalse
-2016-06-16,Mercurio total,< 0.60,mg Hg/L,Embalse
-2016-06-16,Nitritos,0.04,mg NO-2 - N/L,Embalse
-2016-06-16,Turbidez ,2.9,NTU,Embalse
-2016-06-16,Plomo total,< 0.15,mg Pb/L,Embalse
-2016-06-16,Sulfatos,< 10.0,mg SO4/L,Embalse
-2016-06-16,Nitratos,0.5,mg NO-3 - N/L,Embalse
-2016-06-16,Nitrógeno amoniacal,1.3,mg N/L,Embalse
-2016-06-16,Sólidos disueltos totales ,153.0,mg/L,Embalse
-2016-06-16,Sólidos totales,162.0,mg/L,Embalse
-2016-06-16,Zinc total,< 0.025,mg Zn/L,Embalse
 2016-06-16,Coliformes totales,79 x 10,,Embalse
-2016-06-16,Cloruros,4.7,mg Cl-/L,Embalse
-2016-06-16,Color Verdadero,3.9,Unidades Pt-Co,Embalse
-2016-06-16,Cromo total,< 0.12,mg Cr /L,Embalse
-2016-06-16,Arsénico total ,< 0.45,mg As/L,Embalse
-2016-06-16,DBO5,< 2.6,mg O2/L,Embalse
 2016-06-16,Alcalinidad total,94.0,mg CaCO3/L,Embalse
-2016-06-16,DQO,27.5,mg O2/L,Embalse
 2016-06-16,Dureza total,120.0,mg CaCO3/L,Embalse
 2016-06-16,Conductividad,248.0,μs/cm,Embalse
-2016-06-16,Fluoruros ,< 0.13,mg/L,Embalse
-2016-06-16,Cobre total,< 0.04,mg Cu/L,Embalse
 2016-06-16,pH,8.56,unidades de pH,Embalse
-2016-06-16,Hierro total,< 0.12,mg Fe/L,Embalse
-2016-07-07,DQO,< 20,mg O2/L,Embalse
-2016-07-07,Plomo total,< 0.15,mg Pb/L,Embalse
 2016-07-07,Coliformes totales,540  x 10,,Embalse
 2016-07-07,Alcalinidad total,108.0,mg CaCO3/L,Embalse
 2016-07-07,pH,8.73,unidades de pH,Embalse
-2016-07-07,Color Verdadero,3.9,Unidades Pt-Co,Embalse
-2016-07-07,DBO5,< 2.6,mg O2/L,Embalse
-2016-07-07,Zinc total,< 0.025,mg Zn/L,Embalse
-2016-07-07,Nitritos,< 0.008,mg NO-2 - N/L,Embalse
-2016-07-07,Nitrógeno amoniacal,0.25,mg N/L,Embalse
-2016-07-07,Turbidez ,2.2,NTU,Embalse
-2016-07-07,Sólidos totales,206.0,mg/L,Embalse
-2016-07-07,Arsénico total ,< 0.45,mg As/L,Embalse
-2016-07-07,Cromo total,< 0.12,mg Cr /L,Embalse
-2016-07-07,Sulfatos,19.6,mg SO4/L,Embalse
-2016-07-07,Hierro total,< 0.12,mg Fe/L,Embalse
-2016-07-07,Sólidos suspendidos totales,3.0,mg/L,Embalse
-2016-07-07,Nitratos,0.4,mg NO-3 - N/L,Embalse
-2016-07-07,Cloruros,5.0,mg Cl-/L,Embalse
-2016-07-07,Fluoruros ,< 0.13,mg/L,Embalse
-2016-07-07,Sólidos disueltos totales ,203.0,mg/L,Embalse
-2016-07-07,Cobre total,< 0.04,mg Cu/L,Embalse
-2016-07-07,Mercurio total,< 0.60,mg Hg/L,Embalse
 2016-07-07,Dureza total,128.0,mg CaCO3/L,Embalse
-2016-07-07,Sílice ,9.6,mg/L,Embalse
 2016-07-07,Conductividad,252.0,μs/cm,Embalse
-2016-08-03,Arsénico total ,0.59,mg As/L,Embalse
-2016-08-03,Sólidos disueltos totales ,174.0,mg/L,Embalse
-2016-08-03,Hierro total,0.18,mg Fe/L,Embalse
-2016-08-03,Sólidos suspendidos totales,5.0,mg/L,Embalse
-2016-08-03,Plomo total,< 0.006,mg Pb/L,Embalse
-2016-08-03,Color Verdadero,22.0,Unidades Pt-Co,Embalse
-2016-08-03,Cobre total,< 0.04,mg Cu/L,Embalse
-2016-08-03,Cloruros,5.3,mg Cl-/L,Embalse
-2016-08-03,Nitrógeno amoniacal,1.3,mg N/L,Embalse
 2016-08-03,pH,8.46,unidades de pH,Embalse
-2016-08-03,Sílice ,6.6,mg/L,Embalse
-2016-08-03,Sólidos totales,179.0,mg/L,Embalse
-2016-08-03,DQO,< 20,mg O2/L,Embalse
-2016-08-03,Nitratos,< 0.4,mg NO-3 - N/L,Embalse
-2016-08-03,Cromo total,< 0.03,mg Cr /L,Embalse
-2016-08-03,Sulfatos,20.8,mg SO4/L,Embalse
-2016-08-03,Fluoruros ,< 0.13,mg/L,Embalse
 2016-08-03,Alcalinidad total,106.0,mg CaCO3/L,Embalse
-2016-08-03,Zinc total,< 0.025,mg Zn/L,Embalse
-2016-08-03,DBO5,< 2.6,mg O2/L,Embalse
 2016-08-03,Conductividad,260.0,μs/cm,Embalse
 2016-08-03,Dureza total,116.0,mg CaCO3/L,Embalse
-2016-08-03,Mercurio total,< 0.60,mg Hg/L,Embalse
-2016-08-03,Turbidez ,6.4,NTU,Embalse
-2016-08-03,Nitritos,0.009,mg NO-2 - N/L,Embalse
 2016-08-03,Coliformes totales,79.0,,Embalse
 2016-09-09,Conductividad,262.0,μs/cm,Embalse
 2016-09-09,pH,8.7,unidades de pH,Embalse
-2016-09-09,Sólidos disueltos totales ,170.0,mg/L,Embalse
-2016-09-09,Sulfatos,20.3,mg SO4/L,Embalse
-2016-09-09,Turbidez ,8.5,NTU,Embalse
 2016-09-09,Alcalinidad total,108.0,mg CaCO3/L,Embalse
-2016-09-09,Sólidos suspendidos totales,< 4,mg/L,Embalse
 2016-09-09,Coliformes totales,920.0,,Embalse
-2016-09-09,Arsénico total ,< 0.45,mg As/L,Embalse
-2016-09-09,Zinc total,< 0.025,mg Zn/L,Embalse
-2016-09-09,Cloruros,6.0,mg Cl-/L,Embalse
-2016-09-09,Sólidos totales,173.0,mg/L,Embalse
-2016-09-09,Hierro total,0.16,mg Fe/L,Embalse
-2016-09-09,DQO,< 20,mg O2/L,Embalse
-2016-09-09,Nitratos,< 0.4,mg NO-3 - N/L,Embalse
-2016-09-09,Nitritos,0.012,mg NO-2 - N/L,Embalse
-2016-09-09,Sílice ,9.0,mg/L,Embalse
-2016-09-09,Cobre total,< 0.04,mg Cu/L,Embalse
 2016-09-09,Dureza total,< 20,mg CaCO3/L,Embalse
-2016-09-09,Cromo total,< 0.03,mg Cr /L,Embalse
-2016-09-09,Mercurio total,< 0.0006,mg Hg/L,Embalse
-2016-09-09,DBO5,< 2.6,mg O2/L,Embalse
-2016-09-09,Nitrógeno amoniacal,0.55,mg N/L,Embalse
-2016-09-09,Plomo total,< 0.006,mg Pb/L,Embalse
-2016-09-09,Color Verdadero,21.0,Unidades Pt-Co,Embalse
-2016-09-09,Fluoruros ,122.0,mg/L,Embalse
-2017-03-03,Sólidos totales,157.0,mg/L,Embalse
 2017-03-03,pH,8.34,unidades de pH,Embalse
-2017-03-03,Cromo total,< 0.03,mg Cr /L,Embalse
-2017-03-03,O.D.,6.8,mg O2/L,Embalse
-2017-03-03,DBO5,< 2.6,mg O2/L,Embalse
 2017-03-03,Dureza total,137.0,mg CaCO3/L,Embalse
 2017-03-03,Conductividad,254.0,μs/cm,Embalse
-2017-03-03,DQO,< 20,mg O2/L,Embalse
-2017-03-03,Nitratos,0.51,mg NO-3 - N/L,Embalse
 2017-03-03,Coliformes totales,240 x 10,,Embalse
-2017-03-03,Nitritos,0.02,mg NO-2 - N/L,Embalse
 2017-03-03,Alcalinidad total,120.0,mg CaCO3/L,Embalse
-2017-03-03,Color Verdadero,10.0,Unidades Pt-Co,Embalse
-2017-03-03,Sulfatos,31.8,mg SO4/L,Embalse
-2017-03-03,Arsénico total ,< 0.45,mg As/L,Embalse
-2017-03-03,Mercurio total,< 0.0006,mg Hg/L,Embalse
-2017-03-03,Nitrógeno amoniacal,0.3,mg N/L,Embalse
-2017-03-03,Zinc total,< 0.025,mg Zn/L,Embalse
-2017-03-03,Sólidos suspendidos totales,< 4,mg/L,Embalse
-2017-03-03,Plomo total,< 0.006,mg Pb/L,Embalse
-2017-03-03,Hierro total,< 0.12,mg Fe/L,Embalse
-2017-03-03,Turbidez ,2.5,NTU,Embalse
-2017-03-03,Cloruros,3.4,mg Cl-/L,Embalse
-2017-03-03,Sílice ,3.0,mg/L,Embalse
-2017-03-03,Cobre total,< 0.04,mg Cu/L,Embalse
-2017-03-03,Fluoruros ,< 0.13,mg/L,Embalse
-2017-03-03,Sólidos disueltos totales ,153.0,mg/L,Embalse
 2017-05-24,Dureza total,103.3,mg CaCO3/L,Embalse
-2017-05-24,Hierro total,0.21,mg Fe/L,Embalse
-2017-05-24,Turbidez ,9.4,NTU,Embalse
-2017-05-24,Mercurio total,< 0.0006,mg Hg/L,Embalse
 2017-05-24,pH,7.95,unidades de pH,Embalse
-2017-05-24,DQO,< 20,mg O2/L,Embalse
-2017-05-24,O.D.,8.12,mg O2/L,Embalse
-2017-05-24,Sílice ,6.0,mg/L,Embalse
-2017-05-24,Nitratos,< 0.40,mg NO-3 - N/L,Embalse
-2017-05-24,Cloruros,< 2.1,mg Cl-/L,Embalse
-2017-05-24,Sólidos disueltos totales ,126.0,mg/L,Embalse
-2017-05-24,Zinc total,< 0.025,mg Zn/L,Embalse
-2017-05-24,Cobre total,< 0.04,mg Cu/L,Embalse
-2017-05-24,Plomo total,< 0.006,mg Pb/L,Embalse
-2017-05-24,Nitrógeno amoniacal,0.35,mg N/L,Embalse
-2017-05-24,Sólidos suspendidos totales,8.0,mg/L,Embalse
-2017-05-24,Arsénico total ,< 0.45,mg As/L,Embalse
-2017-05-24,Sulfatos,16.4,mg SO4/L,Embalse
-2017-05-24,Color Verdadero,31.0,Unidades Pt-Co,Embalse
-2017-05-24,Sólidos totales,134.0,mg/L,Embalse
 2017-05-24,Alcalinidad total,84.0,mg CaCO3/L,Embalse
-2017-05-24,Cromo total,< 0.03,mg Cr /L,Embalse
-2017-05-24,DBO5,< 2.6,mg O2/L,Embalse
 2017-05-24,Coliformes totales,240.0,,Embalse
 2017-05-24,Conductividad,174.0,μs/cm,Embalse
-2017-05-24,Nitritos,0.012,mg NO-2 - N/L,Embalse
-2017-05-24,Fluoruros ,< 0.13,mg/L,Embalse
 2017-11-09,Coliformes totales,790.0,,Embalse
-2017-11-09,Zinc total,< 0.025,mg Zn/L,Embalse
-2017-11-09,Mercurio total,< 0.0005,mg Hg/L,Embalse
-2017-11-09,Sulfatos,14.7,mg SO4/L,Embalse
-2017-11-09,Turbidez ,5.37,NTU,Embalse
 2017-11-09,pH,7.43,unidades de pH,Embalse
 2017-11-09,Conductividad,180.6,μs/cm,Embalse
 2017-11-09,Alcalinidad total,66.6,mg CaCO3/L,Embalse
-2017-11-09,Arsénico total ,< 0.0025,mg As/L,Embalse
-2017-11-09,Cloruros,< 2.0,mg Cl-/L,Embalse
-2017-11-09,Cobre total,< 0.01,mg Cu/L,Embalse
-2017-11-09,DBO5,3.3,mg O2/L,Embalse
-2017-11-09,DQO,< 15,mg O2/L,Embalse
 2017-11-09,Dureza total,68.0,mg CaCO3/L,Embalse
-2017-11-09,Cromo total,< 0.05,mg Cr /L,Embalse
-2017-11-09,Hierro total,< 0.05,mg Fe/L,Embalse
-2017-11-09,Sólidos totales,101.0,mg/L,Embalse
-2017-11-09,Fluoruros ,0.147,mg/L,Embalse
-2017-11-09,Sólidos disueltos totales ,69.8,mg/L,Embalse
-2017-11-09,Sílice ,11.8,mg/L,Embalse
-2017-11-09,Plomo total,< 0.05,mg Pb/L,Embalse
-2017-11-09,Sólidos suspendidos totales,< 10.0,mg/L,Embalse
-2017-11-09,Nitritos,0.006,mg NO-2 - N/L,Embalse
-2017-11-09,Nitratos,< 0.1,mg NO-3 - N/L,Embalse
-2017-11-09,Nitrógeno amoniacal,< 0.5,mg N/L,Embalse
 2026-04-08,pH,7.53,unidades de pH,Captación
 2026-04-08,Alcalinidad total,89.2,mg CaCO3/L,Captación
 2026-04-08,Coliformes totales,46.0,NMP/100ml,Captación
-2026-04-08,Escherichia coli,33.0,NMP/100ml,Captación
 2026-04-08,Dureza total,96.7,mg CaCO3/L,Captación
 2026-04-08,Turbiedad,50.0,NTU,Captación
 2026-04-08,Conductividad,208.0,µS/cm,Captación
-2026-04-08,Temperatura,19.3,°C,Captación
 2026-04-08,Mercurio,0.00025,mg/L,Captación Embalse - 10m
 2026-04-08,Turbiedad,21.0,NTU,Captación Embalse - 10m
-2026-04-08,Color Verdadero,20.3,Unidades Pt-Co,Captación Embalse - 10m
-2026-04-08,Color Verdadero,16.1,Unidades Pt-Co,Captación
 2026-04-08,pH,7.98,unidades de pH,Captación Embalse - 10m
-2026-04-08,Temperatura,18.6,°C,Captación Embalse - 10m
 2026-04-08,Conductividad,203.0,µS/cm,Captación Embalse - 10m
-2026-04-08,Escherichia coli,33.0,NMP/100ml,Captación Embalse - 10m
 2026-04-08,Coliformes totales,79.0,NMP/100ml,Captación Embalse - 10m
 2026-04-08,Alcalinidad total,87.6,mg CaCO3/L,Captación Embalse - 10m
 2026-04-08,Arsénico,0.003,mg/L,Captación Embalse - 10m
 2026-04-08,Dureza total,91.6,mg CaCO3/L,Captación Embalse - 10m
-2026-04-08,Sulfatos,15.2,mg/L,Captación
 2026-04-14,Arsénico,0.005,mg/L,Cola Embalse
 2026-04-14,Dureza total,88.2,mg CaCO3/L,Cola Embalse
 2026-04-14,Alcalinidad total,93.6,mg CaCO3/L,Cola Embalse
 2026-04-14,Coliformes totales,1600.0,NMP/100ml,Cola Embalse
-2026-04-14,Escherichia coli,1600.0,NMP/100ml,Cola Embalse
 2026-04-14,Turbiedad,150.0,NTU,Cola Embalse
-2026-04-14,Temperatura,18.3,°C,Cola Embalse
-2026-04-14,Plomo,0.076,mg/L,Cola Embalse
