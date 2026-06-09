@@ -4,6 +4,12 @@ import plotly.express as px
 import os
 
 st.set_page_config(page_title="Monitoreo AMB", layout="wide")
+
+# Logo institucional
+if os.path.exists("assets/iconos/logo_amb.png"):
+    st.sidebar.image("assets/iconos/logo_amb.png", use_container_width=True)
+    st.sidebar.markdown("---")
+
 st.title("💧 Sistema de Monitoreo de Calidad de Agua")
 
 # ================= DIAGNÓSTICO: VERIFICAR ARCHIVOS =================
@@ -34,6 +40,21 @@ if ruta_captaciones:
 else:
     st.sidebar.error("❌ No se encontró MASTER_DATA_COMPLETO.csv")
     df_captaciones = pd.DataFrame()
+
+# Cargar datos del embalse
+ruta_embalse = None
+for root, dirs, files in os.walk('.'):
+    for file in files:
+        if file == 'datos_embalse_completo.csv':
+            ruta_embalse = os.path.join(root, file)
+
+if ruta_embalse:
+    st.sidebar.success(f"✅ Embalse: {ruta_embalse}")
+    df_embalse = pd.read_csv(ruta_embalse)
+    df_embalse['Fecha'] = pd.to_datetime(df_embalse['Fecha'])
+else:
+    st.sidebar.error("❌ No se encontró datos_embalse_completo.csv")
+    df_embalse = pd.DataFrame()
 
 # ================= MENÚ DE PRESENTACIÓN =================
 pagina = st.radio(
@@ -104,50 +125,50 @@ elif pagina == "3️⃣ Tendencia histórica 2012–2025":
     else:
         st.error("No se pudieron cargar los datos históricos")
 
-# ================= 4️⃣ PLANTAS =================
-
 # ================= 4️⃣ EMBALSE =================
 elif pagina == "4️⃣ Embalse":
     st.subheader("💧 Monitoreo Histórico del Embalse (2015-2026)")
     
-    # Cargar datos del embalse
-    df_embalse = pd.read_csv('data/datos_embalse_completo.csv')
-    df_embalse['Fecha'] = pd.to_datetime(df_embalse['Fecha'])
-    
-    # Selectores
-    col1, col2 = st.columns(2)
-    with col1:
-        parametro = st.selectbox("📊 Seleccionar parámetro", df_embalse['Parametro'].unique())
-    with col2:
-        sitio = st.selectbox("📍 Seleccionar sitio", ['Todos'] + sorted(df_embalse['Sitio'].unique()))
-    
-    # Filtrar datos
-    df_filtrado = df_embalse[df_embalse['Parametro'] == parametro]
-    if sitio != 'Todos':
-        df_filtrado = df_filtrado[df_filtrado['Sitio'] == sitio]
-    
-    if not df_filtrado.empty:
-        # Gráfico de evolución
-        fig = px.line(df_filtrado, x='Fecha', y='Valor', color='Sitio' if sitio == 'Todos' else None,
-                      title=f'{parametro} - Evolución {sitio if sitio != "Todos" else "todos los sitios"}',
-                      markers=True)
-        st.plotly_chart(fig, use_container_width=True)
+    if not df_embalse.empty:
+        col1, col2 = st.columns(2)
+        with col1:
+            parametro = st.selectbox("📊 Seleccionar parámetro", df_embalse['Parametro'].unique())
+        with col2:
+            sitio = st.selectbox("📍 Seleccionar sitio", ['Todos'] + sorted(df_embalse['Sitio'].unique()))
         
-        # Métricas
-        col_avg, col_min, col_max = st.columns(3)
-        col_avg.metric("Promedio", f"{df_filtrado['Valor'].mean():.2f}")
-        col_min.metric("Mínimo", f"{df_filtrado['Valor'].min():.2f}")
-        col_max.metric("Máximo", f"{df_filtrado['Valor'].max():.2f}")
+        df_filtrado = df_embalse[df_embalse['Parametro'] == parametro]
+        if sitio != 'Todos':
+            df_filtrado = df_filtrado[df_filtrado['Sitio'] == sitio]
         
-        # Tabla de datos
-        with st.expander("📋 Ver todos los datos"):
-            st.dataframe(df_filtrado, use_container_width=True)
+        if not df_filtrado.empty:
+            # Convertir valores a numérico
+            df_filtrado['Valor'] = pd.to_numeric(df_filtrado['Valor'], errors='coerce')
+            df_filtrado = df_filtrado.dropna(subset=['Valor'])
+            
+            if not df_filtrado.empty:
+                fig = px.line(df_filtrado, x='Fecha', y='Valor', color='Sitio' if sitio == 'Todos' else None,
+                              title=f'{parametro} - Evolución {sitio if sitio != "Todos" else "todos los sitios"}',
+                              markers=True)
+                st.plotly_chart(fig, use_container_width=True)
+                
+                # Métricas
+                col_avg, col_min, col_max = st.columns(3)
+                col_avg.metric("Promedio", f"{df_filtrado['Valor'].mean():.2f}")
+                col_min.metric("Mínimo", f"{df_filtrado['Valor'].min():.2f}")
+                col_max.metric("Máximo", f"{df_filtrado['Valor'].max():.2f}")
+                
+                with st.expander("📋 Ver todos los datos"):
+                    st.dataframe(df_filtrado, use_container_width=True)
+            else:
+                st.warning("No hay datos numéricos para este parámetro")
+        else:
+            st.warning("No hay datos para la combinación seleccionada")
     else:
-        st.warning("No hay datos para la combinación seleccionada")
+        st.error("No se pudieron cargar los datos del embalse")
     
-    # Nota sobre los datos
     st.caption("📌 Datos históricos: 2015-2017 (Excel) | Datos recientes: 2026 (Laboratorio AMB)")
 
+# ================= 5️⃣ PLANTAS =================
 elif pagina == "5️⃣ Plantas de tratamiento":
     st.subheader("🏭 Calidad del agua que llega a las plantas")
     col1, col2, col3 = st.columns(3)
@@ -158,8 +179,8 @@ elif pagina == "5️⃣ Plantas de tratamiento":
     with col3:
         st.metric("Planta Bosconia", "Recibe Río Suratá", "Monitoreo continuo")
 
-# ================= 5️⃣ RESUMEN EJECUTIVO =================
-elif pagina == "5️⃣ Resumen ejecutivo":
+# ================= 6️⃣ RESUMEN EJECUTIVO =================
+elif pagina == "6️⃣ Resumen ejecutivo":
     st.subheader("📊 Resumen de calidad de agua 2024")
     
     col1, col2, col3, col4 = st.columns(4)
@@ -181,3 +202,6 @@ elif pagina == "5️⃣ Resumen ejecutivo":
             st.write(f"{color} **{captacion}**: {valor:.1f}")
         
         st.success("✅ El agua de las captaciones cumple con norma de calidad en 2024")
+
+st.markdown("---")
+st.caption(f"💧 Actualizado: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}")
