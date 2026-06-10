@@ -89,10 +89,10 @@ elif pagina == "2️⃣ Captaciones 2024":
     st.subheader("📍 Calidad de agua en captaciones 2024")
     if not df_captaciones.empty:
         captacion = st.selectbox("Seleccionar captación", df_captaciones['Captacion'].unique())
-        parametro = st.selectbox("Seleccionar parámetro", ['ICA', 'Mineralización', 'Materia Orgánica', 'Sólidos Suspendidos Totales', 'Trofia'])
+        parametro = st.selectbox("Seleccionar parámetro", ['ICA', 'Mineralización', 'Materia Orgánica', 'Sólidos Suspendidos Totales', 'Eutrofización'])
         
         df_filtrado = df_captaciones[(df_captaciones['Captacion'] == captacion) & 
-                                       (df_captaciones['Parametro'] == parametro.replace('Mineralización', 'ICOMI').replace('Materia Orgánica', 'ICOMO').replace('Sólidos Suspendidos Totales', 'ICOSUS').replace('Trofia', 'ICOTRO'))]
+                                       (df_captaciones['Parametro'] == parametro.replace('Mineralización', 'ICOMI').replace('Materia Orgánica', 'ICOMO').replace('Sólidos Suspendidos Totales', 'ICOSUS').replace('Eutrofización', 'ICOTRO'))]
         
         if not df_filtrado.empty:
             fig = px.line(df_filtrado, x='Fecha', y='Valor', markers=True,
