@@ -92,7 +92,7 @@ elif pagina == "2️⃣ Captaciones 2024":
         parametro = st.selectbox("Seleccionar parámetro", ['ICA', 'ICOMI', 'ICOMO', 'ICOSUS', 'ICOpH', 'ICOTRO'])
         
         df_filtrado = df_captaciones[(df_captaciones['Captacion'] == captacion) & 
-                                       (df_captaciones['Parametro'] == parametro)]
+                                       (df_captaciones['Parametro'] == parametro.replace('Mineralización', 'ICOMI').replace('Materia Orgánica', 'ICOMO').replace('Sólidos Suspendidos Totales', 'ICOSUS').replace('Trofia', 'ICOTRO'))]
         
         if not df_filtrado.empty:
             fig = px.line(df_filtrado, x='Fecha', y='Valor', markers=True,
