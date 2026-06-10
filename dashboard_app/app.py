@@ -89,7 +89,7 @@ elif pagina == "2️⃣ Captaciones 2024":
     st.subheader("📍 Calidad de agua en captaciones 2024")
     if not df_captaciones.empty:
         captacion = st.selectbox("Seleccionar captación", df_captaciones['Captacion'].unique())
-        parametro = st.selectbox("Seleccionar parámetro", ['ICA', 'ICOMI', 'ICOMO', 'ICOSUS', 'ICOpH', 'ICOTRO'])
+        parametro = st.selectbox("Seleccionar parámetro", ['ICA', 'Mineralización', 'Materia Orgánica', 'Sólidos Suspendidos Totales', 'Trofia'])
         
         df_filtrado = df_captaciones[(df_captaciones['Captacion'] == captacion) & 
                                        (df_captaciones['Parametro'] == parametro.replace('Mineralización', 'ICOMI').replace('Materia Orgánica', 'ICOMO').replace('Sólidos Suspendidos Totales', 'ICOSUS').replace('Trofia', 'ICOTRO'))]
