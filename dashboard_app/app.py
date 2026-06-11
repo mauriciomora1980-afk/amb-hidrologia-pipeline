@@ -168,102 +168,75 @@ elif pagina == "5️⃣ Plantas de tratamiento":
 # ================= 6️⃣ RESUMEN EJECUTIVO =================
 
 
+
 # ================= COT - EFICIENCIA DE PLANTAS =================
 elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
     st.subheader("📊 Carbono Orgánico Total (COT) - Resolución 2115/2007")
-    st.caption("🔹 **Norma: COT ≤ 5.0 mg/L** | 🔹 **Eficiencia objetivo: > 30% de remoción**")
+    st.caption("🔹 **Norma Resolución 2115: COT en AGUA TRATADA ≤ 5.0 mg/L** | 🔹 **Eficiencia objetivo: > 30% de remoción**")
     
     # Cargar datos COT
     df_cot = pd.read_csv('data/datos_cot_plantas.csv')
     df_cot['Fecha_Muestra'] = pd.to_datetime(df_cot['Fecha_Muestra'])
     
-    # Selector de planta
-    plantas = df_cot['Planta'].unique()
-    planta_sel = st.selectbox("Seleccionar Planta", plantas, )
+    # Selector de planta (sin key)
+    plantas = sorted(df_cot['Planta'].unique())
+    planta_sel = st.selectbox("Seleccionar Planta", plantas, index=0)
     
     # Filtrar datos
-    df_planta = df_cot[df_cot['Planta'] == planta_sel]
+    df_planta = df_cot[df_cot['Planta'] == planta_sel].copy()
     
-    # Calcular eficiencia
-    df_pivot = df_planta.pivot(index='Fecha_Muestra', columns='Tipo_Muestra', values='Resultado_COT_mgL').dropna()
-    if not df_pivot.empty:
-        df_pivot['Eficiencia (%)'] = ((df_pivot['AGUA CRUDA'] - df_pivot['AGUA TRATADA']) / df_pivot['AGUA CRUDA']) * 100
-        df_pivot['Cumple_Norma'] = df_pivot['AGUA TRATADA'] <= 5.0
-        df_pivot['Cumple_Eficiencia'] = df_pivot['Eficiencia (%)'] >= 30
+    if not df_planta.empty:
+        # Crear pivot para eficiencia
+        df_pivot = df_planta.pivot(index='Fecha_Muestra', columns='Tipo_Muestra', values='Resultado_COT_mgL').dropna()
         
-        # Métricas
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.metric("COT Tratado Promedio", f"{df_pivot['AGUA TRATADA'].mean():.2f} mg/L", 
-                      delta="✓ Cumple norma" if df_pivot['AGUA TRATADA'].mean() <= 5.0 else "✗ Supera norma")
-        with col2:
-            st.metric("Eficiencia Promedio", f"{df_pivot['Eficiencia (%)'].mean():.1f}%")
-        with col3:
-            st.metric("Cumplimiento Norma", f"{df_pivot['Cumple_Norma'].sum()}/{len(df_pivot)} muestras")
-        
-        # Gráfico de líneas
-        fig = px.line(df_planta, x='Fecha_Muestra', y='Resultado_COT_mgL', color='Tipo_Muestra',
-                      title=f'COT - {planta_sel} (Crudo vs Tratado)',
-                      markers=True)
-        fig.add_hline(y=5.0, line_dash="dash", line_color="red", annotation_text="Límite Norma 5.0 mg/L")
-        st.plotly_chart(fig, use_container_width=True)
-        
-        # Tabla de eficiencia
-        st.subheader("📈 Eficiencia de Remoción de COT")
-        df_mostrar = df_pivot[['AGUA CRUDA', 'AGUA TRATADA', 'Eficiencia (%)']].copy()
-        df_mostrar['Cumple'] = df_pivot['Cumple_Norma'].map({True: '✅ Cumple', False: '❌ No cumple'})
-        st.dataframe(df_mostrar, use_container_width=True)
-        
-        # Gráfico de eficiencia
-        fig_ef = px.bar(df_pivot, x=df_pivot.index, y='Eficiencia (%)', 
-                        title=f'Eficiencia de Remoción - {planta_sel}',
-                        color='Eficiencia (%)', color_continuous_scale=['red', 'yellow', 'green'])
-        fig_ef.add_hline(y=30, line_dash="dash", line_color="green", annotation_text="Eficiencia objetivo 30%")
-        st.plotly_chart(fig_ef, use_container_width=True)
-        
-        # Resumen por planta
-        st.subheader("🏭 Resumen de Cumplimiento por Planta")
-        resumen = df_cot.groupby(['Planta', 'Tipo_Muestra'])['Resultado_COT_mgL'].mean().unstack()
-        resumen['Eficiencia (%)'] = ((resumen['AGUA CRUDA'] - resumen['AGUA TRATADA']) / resumen['AGUA CRUDA']) * 100
-        resumen['Cumple_Norma'] = resumen['AGUA TRATADA'] <= 5.0
-        resumen['Cumple_Eficiencia'] = resumen['Eficiencia (%)'] >= 30
-        
-        # Formato de colores
-        def color_cumple(val):
-            return 'background-color: #90EE90' if val else 'background-color: #FFCCCC'
-        
-        st.dataframe(resumen.style.applymap(color_cumple, subset=['Cumple_Norma', 'Cumple_Eficiencia']))
-
-    st.subheader("📊 Carbono Orgánico Total (COT) en Plantas de Tratamiento")
-    
-    # Cargar datos COT
-    df_cot = pd.read_csv('data/datos_cot_plantas.csv')
-    df_cot['Fecha_Muestra'] = pd.to_datetime(df_cot['Fecha_Muestra'])
-    
-    # Selector de planta
-    plantas = df_cot['Planta'].unique()
-    planta_sel = st.selectbox("Seleccionar Planta", plantas, )
-    
-    # Filtrar datos
-    df_planta = df_cot[df_cot['Planta'] == planta_sel]
-    
-    # Gráfico de líneas
-    fig = px.line(df_planta, x='Fecha_Muestra', y='Resultado_COT_mgL', color='Tipo_Muestra',
-                  title=f'COT - {planta_sel} (Crudo vs Tratado)',
-                  markers=True)
-    st.plotly_chart(fig, use_container_width=True)
-    
-    # Calcular eficiencia
-    df_pivot = df_planta.pivot(index='Fecha_Muestra', columns='Tipo_Muestra', values='Resultado_COT_mgL').dropna()
-    if not df_pivot.empty:
-        df_pivot['Eficiencia (%)'] = ((df_pivot['AGUA CRUDA'] - df_pivot['AGUA TRATADA']) / df_pivot['AGUA CRUDA']) * 100
-        st.subheader("📈 Eficiencia de Remoción de COT")
-        st.dataframe(df_pivot[['AGUA CRUDA', 'AGUA TRATADA', 'Eficiencia (%)']], use_container_width=True)
-        
-        # Gráfico de eficiencia
-        fig_ef = px.bar(df_pivot, x=df_pivot.index, y='Eficiencia (%)', title=f'Eficiencia - {planta_sel}')
-        st.plotly_chart(fig_ef, use_container_width=True)
-
+        if not df_pivot.empty and 'AGUA CRUDA' in df_pivot.columns and 'AGUA TRATADA' in df_pivot.columns:
+            df_pivot['Eficiencia (%)'] = ((df_pivot['AGUA CRUDA'] - df_pivot['AGUA TRATADA']) / df_pivot['AGUA CRUDA']) * 100
+            
+            # Métricas
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                promedio_tratada = df_pivot['AGUA TRATADA'].mean()
+                cumple = "✓ Cumple norma (≤5.0)" if promedio_tratada <= 5.0 else "✗ Supera norma (>5.0)"
+                st.metric("COT Tratado Promedio", f"{promedio_tratada:.2f} mg/L", delta=cumple)
+            with col2:
+                st.metric("Eficiencia Promedio", f"{df_pivot['Eficiencia (%)'].mean():.1f}%")
+            with col3:
+                cumple_muestras = (df_pivot['AGUA TRATADA'] <= 5.0).sum()
+                st.metric("Cumplimiento Norma", f"{cumple_muestras}/{len(df_pivot)} muestras")
+            
+            # Gráfico de líneas
+            fig = px.line(df_planta, x='Fecha_Muestra', y='Resultado_COT_mgL', color='Tipo_Muestra',
+                          title=f'COT - {planta_sel} (Crudo vs Tratado)',
+                          markers=True)
+            fig.add_hline(y=5.0, line_dash="dash", line_color="red", annotation_text="Límite Norma 5.0 mg/L")
+            st.plotly_chart(fig, use_container_width=True)
+            
+            # Tabla de eficiencia
+            st.subheader("📈 Eficiencia de Remoción de COT")
+            df_mostrar = df_pivot[['AGUA CRUDA', 'AGUA TRATADA', 'Eficiencia (%)']].copy()
+            df_mostrar['Cumple'] = df_pivot['AGUA TRATADA'] <= 5.0
+            df_mostrar['Cumple'] = df_mostrar['Cumple'].map({True: '✅ Cumple', False: '❌ No cumple'})
+            st.dataframe(df_mostrar, use_container_width=True)
+            
+            # Gráfico de eficiencia
+            fig_ef = px.bar(df_pivot, x=df_pivot.index, y='Eficiencia (%)', 
+                            title=f'Eficiencia de Remoción - {planta_sel}',
+                            color='Eficiencia (%)', color_continuous_scale=['red', 'yellow', 'green'])
+            fig_ef.add_hline(y=30, line_dash="dash", line_color="green", annotation_text="Eficiencia objetivo 30%")
+            st.plotly_chart(fig_ef, use_container_width=True)
+            
+            # Resumen por planta
+            st.subheader("🏭 Resumen de Cumplimiento por Planta")
+            resumen = df_cot.groupby(['Planta', 'Tipo_Muestra'])['Resultado_COT_mgL'].mean().unstack()
+            if 'AGUA CRUDA' in resumen.columns and 'AGUA TRATADA' in resumen.columns:
+                resumen['Eficiencia (%)'] = ((resumen['AGUA CRUDA'] - resumen['AGUA TRATADA']) / resumen['AGUA CRUDA']) * 100
+                resumen['Cumple_Norma'] = resumen['AGUA TRATADA'] <= 5.0
+                resumen['Cumple_Eficiencia'] = resumen['Eficiencia (%)'] >= 30
+                st.dataframe(resumen, use_container_width=True)
+        else:
+            st.warning("No hay suficientes datos (crudo y tratado) para calcular eficiencia")
+    else:
+        st.warning("No hay datos para la planta seleccionada")
 elif pagina == "6️⃣ Resumen ejecutivo":
     st.subheader("📊 Resumen de calidad de agua 2024")
     
