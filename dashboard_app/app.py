@@ -179,7 +179,7 @@ elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
     
     # Selector de planta
     plantas = df_cot['Planta'].unique()
-    planta_sel = st.selectbox("Seleccionar Planta", plantas)
+    planta_sel = st.selectbox("Seleccionar Planta", plantas, key="planta_cot")
     
     # Filtrar datos
     df_planta = df_cot[df_cot['Planta'] == planta_sel]
@@ -242,7 +242,7 @@ elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
     
     # Selector de planta
     plantas = df_cot['Planta'].unique()
-    planta_sel = st.selectbox("Seleccionar Planta", plantas)
+    planta_sel = st.selectbox("Seleccionar Planta", plantas, key="planta_cot")
     
     # Filtrar datos
     df_planta = df_cot[df_cot['Planta'] == planta_sel]
