@@ -334,3 +334,14 @@ Fecha,Parametro,Valor,Unidad,Sitio
 2024-01-01,ICA,0.715,,Centro del embalse (fondo)
 2024-01-01,ICA,0.756,,Captación (zona fótica)
 2024-01-01,ICA,0.705,,Captación (fondo)
+2025-01-01,pH,8.19,unidades de pH,Cola del embalse (superficial)
+2025-01-01,pH,8.16,unidades de pH,Cola del embalse (zona fótica)
+2025-01-01,pH,7.62,unidades de pH,Cola del embalse (fondo)
+2025-01-01,pH,8.3,unidades de pH,Centro del embalse (superficial)
+2025-01-01,pH,8.31,unidades de pH,Centro del embalse (zona fótica)
+2025-01-01,pH,7.3,unidades de pH,Centro del embalse (fondo)
+2025-01-01,pH,8.34,unidades de pH,Captación (superficial)
+2025-01-01,pH,8.29,unidades de pH,Captación (zona fótica)
+2025-01-01,pH,7.45,unidades de pH,Captación (fondo)
+2025-01-01,pH,8.46,unidades de pH,Litoral izquierdo
+2025-01-01,pH,8.06,unidades de pH,Litoral derecho
