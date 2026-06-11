@@ -66,7 +66,7 @@ pagina = st.radio(
      "5️⃣ Plantas de tratamiento",
      "6️⃣ Resumen ejecutivo",
      "7️⃣ Eficiencia de Plantas (COT)",
-     "8️⃣ Hidrobiología 2023"],
+     "8️⃣ Hidrología (Embalse y afluentes) 2023"],
     horizontal=True
 )
 
@@ -173,7 +173,7 @@ elif pagina == "5️⃣ Plantas de tratamiento":
 # ================= COT - EFICIENCIA DE PLANTAS =================
 
 # ================= 8️⃣ HIDROBIOLOGÍA ECOSAM 2023 =================
-elif pagina == "8️⃣ Hidrobiología 2023":
+elif pagina == "8️⃣ Hidrología (Embalse y afluentes) 2023":
     st.subheader("🧬 Hidrobiología del Embalse - ECOSAM 2023")
     st.caption("Datos de ECOSAM S.A.S. (Caracterización hidrobiológica, junio 2023)")
     
