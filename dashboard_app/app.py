@@ -67,7 +67,8 @@ pagina = st.radio(
      "6️⃣ Resumen ejecutivo",
      "7️⃣ Eficiencia de Plantas (COT)",
      "8️⃣ Hidrología (Embalse y afluentes) 2023",
-     "9️⃣ Laboratorio amb 2026 Embalse"],
+     "9️⃣ Laboratorio amb 2026 Embalse",
+     "🔟 Monitoreo Cuenca Suratá 2026"],
     horizontal=True
 )
 
@@ -176,6 +177,35 @@ elif pagina == "5️⃣ Plantas de tratamiento":
 # ================= 8️⃣ HIDROBIOLOGÍA ECOSAM 2023 =================
 
 # ================= 9️⃣ Laboratorio amb 2026 Embalse =================
+
+# ================= 🔟 Monitoreo Cuenca Suratá 2026 =================
+elif pagina == "🔟 Monitoreo Cuenca Suratá 2026":
+    st.subheader("🏔️ Monitoreo de Calidad de Agua - Cuenca Suratá")
+    st.caption("📌 Zona con influencia minera | Monitoreo mensual desde 2021")
+    st.info("⏳ Datos en proceso de integración. Próximamente disponible.")
+    
+    # Mostrar sitios monitoreados
+    st.markdown("""
+    ### 📍 Sitios de monitoreo:
+    - **Río Vetas** (influencia minera)
+    - **Río Charta**
+    - **Pánaga** (confluencia Suratá)
+    - **Uña de Gato** (río Suratá alto)
+    - **Surata Charta** (confluencia)
+    - **Caneyes**
+    - **Mongora**
+    - **Quebrada La Baja**
+    
+    ### 📊 Parámetros analizados:
+    - pH, Turbiedad, Conductividad
+    - Metales: Arsénico, Mercurio, Plomo, Cadmio, Zinc, Cobre, Hierro, Manganeso
+    - Coliformes totales, E. coli
+    - Alcalinidad, Dureza, Cloruros, Sulfatos, Nitratos, Nitritos
+    - Cianuro Libre
+    """)
+    
+    st.caption("📌 Fuente: Laboratorio de Control de Calidad Aguas amb | Monitoreo mensual")
+
 elif pagina == "9️⃣ Laboratorio amb 2026 Embalse":
     st.subheader("🔬 Monitoreos Laboratorio amb 2026 - Embalse")
     st.caption("📌 Datos de muestras compuestas superficiales (integra superficial + profundidad)")
