@@ -66,7 +66,8 @@ pagina = st.radio(
      "5️⃣ Plantas de tratamiento",
      "6️⃣ Resumen ejecutivo",
      "7️⃣ Eficiencia de Plantas (COT)",
-     "8️⃣ Hidrología (Embalse y afluentes) 2023"],
+     "8️⃣ Hidrología (Embalse y afluentes) 2023",
+     "9️⃣ Laboratorio amb 2026 Embalse"],
     horizontal=True
 )
 
@@ -173,6 +174,44 @@ elif pagina == "5️⃣ Plantas de tratamiento":
 # ================= COT - EFICIENCIA DE PLANTAS =================
 
 # ================= 8️⃣ HIDROBIOLOGÍA ECOSAM 2023 =================
+
+# ================= 9️⃣ Laboratorio amb 2026 Embalse =================
+elif pagina == "9️⃣ Laboratorio amb 2026 Embalse":
+    st.subheader("🔬 Monitoreos Laboratorio amb 2026 - Embalse")
+    st.caption("📌 Datos de muestras compuestas superficiales (integra superficial + profundidad)")
+    
+    # Cargar datos del embalse (para 2026)
+    df_2026 = df_embalse[df_embalse['Fecha'].dt.year == 2026]
+    
+    if not df_2026.empty:
+        col1, col2 = st.columns(2)
+        with col1:
+            parametro = st.selectbox("📊 Seleccionar parámetro", df_2026['Parametro'].unique(), key="param_2026")
+        with col2:
+            sitio = st.selectbox("📍 Seleccionar sitio", ['Todos'] + sorted(df_2026['Sitio'].unique()), key="sitio_2026")
+        
+        df_filtrado = df_2026[df_2026['Parametro'] == parametro]
+        if sitio != 'Todos':
+            df_filtrado = df_filtrado[df_filtrado['Sitio'] == sitio]
+        
+        if not df_filtrado.empty:
+            fig = px.line(df_filtrado, x='Fecha', y='Valor', color='Sitio' if sitio == 'Todos' else None,
+                          title=f'{parametro} - Laboratorio amb 2026',
+                          markers=True)
+            st.plotly_chart(fig, use_container_width=True)
+            
+            col_avg, col_min, col_max = st.columns(3)
+            col_avg.metric("Promedio", f"{df_filtrado['Valor'].mean():.2f}")
+            col_min.metric("Mínimo", f"{df_filtrado['Valor'].min():.2f}")
+            col_max.metric("Máximo", f"{df_filtrado['Valor'].max():.2f}")
+            
+            with st.expander("📋 Ver todos los datos 2026"):
+                st.dataframe(df_filtrado, use_container_width=True)
+        else:
+            st.warning("No hay datos para la combinación seleccionada")
+    else:
+        st.info("No hay datos disponibles para 2026")
+
 elif pagina == "8️⃣ Hidrología (Embalse y afluentes) 2023":
     st.subheader("🧬 Hidrobiología del Embalse - ECOSAM 2023")
     st.caption("Datos de ECOSAM S.A.S. (Caracterización hidrobiológica, junio 2023)")
