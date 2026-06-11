@@ -291,3 +291,29 @@ Fecha,Parametro,Valor,Unidad,Sitio
 2026-04-14,Turbiedad,150.0,NTU,Cola Embalse
 2026-04-14,Temperatura,18.3,°C,Cola Embalse
 2026-04-14,Plomo,0.076,mg/L,Cola Embalse
+2024-01-01,Oxígeno Disuelto,8.5,mg/L,Aguas debajo de la presa
+2024-01-01,Oxígeno Disuelto,7.23,mg/L,Quebrada la Reforma
+2024-01-01,Oxígeno Disuelto,8.71,mg/L,Río Tona antes confluencia Q. Ranas
+2024-01-01,Oxígeno Disuelto,7.64,mg/L,Quebrada Ranas
+2024-01-01,Oxígeno Disuelto,5.96,mg/L,Quebrada Gualilo
+2024-01-01,Sólidos Disueltos Totales,132.0,mg/L,Aguas debajo de la presa
+2024-01-01,Sólidos Disueltos Totales,214.0,mg/L,Quebrada la Reforma
+2024-01-01,Sólidos Disueltos Totales,79.0,mg/L,Río Tona antes confluencia Q. Ranas
+2024-01-01,Sólidos Disueltos Totales,129.0,mg/L,Quebrada Ranas
+2024-01-01,Sólidos Disueltos Totales,229.0,mg/L,Quebrada Gualilo
+2024-01-01,ICA,0.788,,Aguas debajo de la presa
+2024-01-01,ICA,0.742,,Quebrada la Reforma
+2024-01-01,ICA,0.88,,Río Tona antes confluencia Q. Ranas
+2024-01-01,ICA,0.787,,Quebrada Ranas
+2024-01-01,ICA,0.715,,Quebrada Gualilo
+2025-01-01,ICA,0.79,,Cola del embalse (superficial)
+2025-01-01,ICA,0.8,,Centro del embalse (superficial)
+2025-01-01,ICA,0.8,,Captación (superficial)
+2025-01-01,ICA,0.77,,Litoral izquierdo
+2025-01-01,ICA,0.81,,Litoral derecho
+2025-01-01,Oxígeno Disuelto,6.29,mg/L,Cola del embalse (zona fótica)
+2025-01-01,Oxígeno Disuelto,5.13,mg/L,Cola del embalse (fondo)
+2025-01-01,Oxígeno Disuelto,6.56,mg/L,Centro del embalse (zona fótica)
+2025-01-01,Oxígeno Disuelto,0.98,mg/L,Centro del embalse (fondo)
+2025-01-01,Oxígeno Disuelto,6.34,mg/L,Captación (zona fótica)
+2025-01-01,Oxígeno Disuelto,0.93,mg/L,Captación (fondo)
