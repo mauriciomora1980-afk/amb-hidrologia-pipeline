@@ -65,7 +65,8 @@ pagina = st.radio(
      "4️⃣ Embalse",
      "5️⃣ Plantas de tratamiento",
      "6️⃣ Resumen ejecutivo",
-     "7️⃣ Eficiencia de Plantas (COT)"],
+     "7️⃣ Eficiencia de Plantas (COT)",
+     "8️⃣ Hidrobiología 2023"],
     horizontal=True
 )
 
@@ -170,6 +171,48 @@ elif pagina == "5️⃣ Plantas de tratamiento":
 
 
 # ================= COT - EFICIENCIA DE PLANTAS =================
+
+# ================= 8️⃣ HIDROBIOLOGÍA ECOSAM 2023 =================
+elif pagina == "8️⃣ Hidrobiología 2023":
+    st.subheader("🧬 Hidrobiología del Embalse - ECOSAM 2023")
+    st.caption("Datos de ECOSAM S.A.S. (Caracterización hidrobiológica, junio 2023)")
+    
+    datos_hidro = pd.DataFrame({
+        'Punto': ['Cola del embalse', 'Centro del embalse', 'Captación del embalse',
+                  'Embalse Litoral izquierdo', 'Río Tona antes Q. Ranas', 'Quebrada Ranas',
+                  'Aguas debajo de la presa', 'Cola del embalse', 'Centro del embalse',
+                  'Captación del embalse', 'Aguas debajo de la presa', 'Quebrada El Gualilo'],
+        'Comunidad': ['Fitoplancton', 'Fitoplancton', 'Fitoplancton',
+                      'Perifiton', 'Perifiton', 'Perifiton',
+                      'Perifiton', 'Zooplancton', 'Zooplancton',
+                      'Zooplancton', 'Bentónicos', 'Bentónicos'],
+        'Taxa': ['Navicula sp.', 'Navicula sp.', 'Navicula sp.',
+                 'Navicula sp.', 'Navicula sp.', 'Navicula sp.',
+                 'Navicula sp.', 'Brachionus sp.', 'Brachionus sp.',
+                 'Brachionus sp.', 'Physidae', 'Naucoridae'],
+        'Abundancia': [147, 0, 34, 34, 92, 180, 43, 35, 902, 559, 4, 2],
+        'Unidad': ['Ind/L', 'Ind/L', 'Ind/L', 'Ind/cm²', 'Ind/cm²', 'Ind/cm²',
+                   'Ind/cm²', 'Ind/L', 'Ind/L', 'Ind/L', 'Ind/m²', 'Ind/m²']
+    })
+    
+    comunidades = ['Todas'] + sorted(datos_hidro['Comunidad'].unique())
+    comunidad_sel = st.selectbox("Seleccionar comunidad hidrobiológica", comunidades, key="comunidad_hidro_pestana")
+    
+    if comunidad_sel != 'Todas':
+        df_hidro = datos_hidro[datos_hidro['Comunidad'] == comunidad_sel]
+    else:
+        df_hidro = datos_hidro
+    
+    fig_hidro = px.bar(df_hidro, x='Punto', y='Abundancia', color='Taxa',
+                       title=f'Abundancia de {comunidad_sel if comunidad_sel != "Todas" else "comunidades hidrobiológicas"} (ECOSAM 2023)',
+                       barmode='group')
+    st.plotly_chart(fig_hidro, use_container_width=True)
+    
+    with st.expander("📋 Ver todos los datos hidrobiológicos"):
+        st.dataframe(datos_hidro, use_container_width=True)
+    
+    st.caption("📌 Fuente: ECOSAM S.A.S. - Caracterización hidrobiológica del embalse de Bucaramanga, junio 2023")
+
 elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
     st.subheader("📊 Carbono Orgánico Total (COT) - Resolución 2115/2007")
     st.caption("🔹 **Norma Resolución 2115: COT en AGUA TRATADA ≤ 5.0 mg/L** | 🔹 **Eficiencia objetivo: > 30% de remoción**")
