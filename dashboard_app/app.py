@@ -64,7 +64,8 @@ pagina = st.radio(
      "3️⃣ Tendencia histórica 2012–2025",
      "4️⃣ Embalse",
      "5️⃣ Plantas de tratamiento",
-     "6️⃣ Resumen ejecutivo"],
+     "6️⃣ Resumen ejecutivo",
+     "7️⃣ Eficiencia de Plantas (COT)"],
     horizontal=True
 )
 
@@ -165,6 +166,39 @@ elif pagina == "5️⃣ Plantas de tratamiento":
         st.metric("Planta Bosconia", "Recibe Río Suratá", "Monitoreo continuo")
 
 # ================= 6️⃣ RESUMEN EJECUTIVO =================
+
+# ================= COT - EFICIENCIA DE PLANTAS =================
+elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
+    st.subheader("📊 Carbono Orgánico Total (COT) en Plantas de Tratamiento")
+    
+    # Cargar datos COT
+    df_cot = pd.read_csv('data/datos_cot_plantas.csv')
+    df_cot['Fecha_Muestra'] = pd.to_datetime(df_cot['Fecha_Muestra'])
+    
+    # Selector de planta
+    plantas = df_cot['Planta'].unique()
+    planta_sel = st.selectbox("Seleccionar Planta", plantas)
+    
+    # Filtrar datos
+    df_planta = df_cot[df_cot['Planta'] == planta_sel]
+    
+    # Gráfico de líneas
+    fig = px.line(df_planta, x='Fecha_Muestra', y='Resultado_COT_mgL', color='Tipo_Muestra',
+                  title=f'COT - {planta_sel} (Crudo vs Tratado)',
+                  markers=True)
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Calcular eficiencia
+    df_pivot = df_planta.pivot(index='Fecha_Muestra', columns='Tipo_Muestra', values='Resultado_COT_mgL').dropna()
+    if not df_pivot.empty:
+        df_pivot['Eficiencia (%)'] = ((df_pivot['AGUA CRUDA'] - df_pivot['AGUA TRATADA']) / df_pivot['AGUA CRUDA']) * 100
+        st.subheader("📈 Eficiencia de Remoción de COT")
+        st.dataframe(df_pivot[['AGUA CRUDA', 'AGUA TRATADA', 'Eficiencia (%)']], use_container_width=True)
+        
+        # Gráfico de eficiencia
+        fig_ef = px.bar(df_pivot, x=df_pivot.index, y='Eficiencia (%)', title=f'Eficiencia - {planta_sel}')
+        st.plotly_chart(fig_ef, use_container_width=True)
+
 elif pagina == "6️⃣ Resumen ejecutivo":
     st.subheader("📊 Resumen de calidad de agua 2024")
     
