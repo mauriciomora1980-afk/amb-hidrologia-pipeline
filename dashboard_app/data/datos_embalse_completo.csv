@@ -317,3 +317,19 @@ Fecha,Parametro,Valor,Unidad,Sitio
 2025-01-01,Oxígeno Disuelto,0.98,mg/L,Centro del embalse (fondo)
 2025-01-01,Oxígeno Disuelto,6.34,mg/L,Captación (zona fótica)
 2025-01-01,Oxígeno Disuelto,0.93,mg/L,Captación (fondo)
+2025-01-01,ICA,0.79,,Cola del embalse (superficial)
+2025-01-01,Oxígeno Disuelto,6.07,mg/L,Cola del embalse (superficial)
+2025-01-01,ICA,0.8,,Cola del embalse (zona fótica)
+2025-01-01,ICA,0.78,,Cola del embalse (fondo)
+2025-01-01,ICA,0.8,,Centro del embalse (superficial)
+2025-01-01,Oxígeno Disuelto,6.42,mg/L,Centro del embalse (superficial)
+2025-01-01,ICA,0.8,,Centro del embalse (zona fótica)
+2025-01-01,ICA,0.66,,Centro del embalse (fondo)
+2025-01-01,ICA,0.8,,Captación (superficial)
+2025-01-01,Oxígeno Disuelto,6.37,mg/L,Captación (superficial)
+2025-01-01,ICA,0.79,,Captación (zona fótica)
+2025-01-01,ICA,0.67,,Captación (fondo)
+2025-01-01,ICA,0.77,,Litoral izquierdo
+2025-01-01,Oxígeno Disuelto,6.11,mg/L,Litoral izquierdo
+2025-01-01,ICA,0.81,,Litoral derecho
+2025-01-01,Oxígeno Disuelto,6.02,mg/L,Litoral derecho
