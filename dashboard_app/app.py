@@ -93,7 +93,16 @@ elif pagina == "2️⃣ Captaciones 2024":
     st.subheader("📍 Calidad de agua en captaciones 2024")
     if not df_captaciones.empty:
         captacion = st.selectbox("Seleccionar captación", df_captaciones['Captacion'].unique())
-        parametro = st.selectbox("Seleccionar parámetro", ['ICA', 'Mineralización', 'Materia Orgánica', 'Sólidos Suspendidos Totales', 'Eutrofización'])
+        parametro = st.selectbox("Seleccionar parámetro", ['ICA', 'ICOMI', 'ICOMO', 'ICOSUS', 'ICOpH', 'ICOTRO'])
+
+    st.caption("📌 **Significado de los índices:**")
+    st.caption("- **ICA**: Índice de Calidad del Agua")
+    st.caption("- **ICOMI**: Mineralización")
+    st.caption("- **ICOMO**: Materia Orgánica")
+    st.caption("- **ICOSUS**: Sólidos Suspendidos")
+    st.caption("- **ICOpH**: pH")
+    st.caption("- **ICOTRO**: Eutrofización")
+
         
         df_filtrado = df_captaciones[(df_captaciones['Captacion'] == captacion) & 
                                        (df_captaciones['Parametro'] == parametro.replace('Mineralización', 'ICOMI').replace('Materia Orgánica', 'ICOMO').replace('Sólidos Suspendidos Totales', 'ICOSUS').replace('Eutrofización', 'ICOTRO'))]
