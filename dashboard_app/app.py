@@ -4,20 +4,15 @@ import plotly.express as px
 import os
 
 st.set_page_config(page_title="Monitoreo AMB", layout="wide")
-
 if os.path.exists("assets/iconos/logo_amb.png"):
     st.sidebar.image("assets/iconos/logo_amb.png", use_container_width=True)
     st.sidebar.markdown("---")
-
 st.title("💧 Sistema de Monitoreo de Calidad de Agua")
-
 st.sidebar.markdown("### 🔧 Depuración")
 st.sidebar.write(f"Directorio actual: {os.getcwd()}")
-
 ruta_historico = None
 ruta_captaciones = None
 ruta_embalse = None
-
 for root, dirs, files in os.walk('.'):
     for file in files:
         if file == 'datos_historicos_formato_largo.csv':
@@ -26,21 +21,18 @@ for root, dirs, files in os.walk('.'):
             ruta_captaciones = os.path.join(root, file)
         if file == 'datos_embalse_completo.csv':
             ruta_embalse = os.path.join(root, file)
-
 if ruta_historico:
     st.sidebar.success(f"✅ Histórico: {ruta_historico}")
     df_historico = pd.read_csv(ruta_historico)
 else:
     st.sidebar.error("❌ No se encontró datos_historicos_formato_largo.csv")
     df_historico = pd.DataFrame()
-
 if ruta_captaciones:
     st.sidebar.success(f"✅ Captaciones: {ruta_captaciones}")
     df_captaciones = pd.read_csv(ruta_captaciones)
 else:
     st.sidebar.error("❌ No se encontró MASTER_DATA_COMPLETO.csv")
     df_captaciones = pd.DataFrame()
-
 if ruta_embalse:
     st.sidebar.success(f"✅ Embalse: {ruta_embalse}")
     df_embalse = pd.read_csv(ruta_embalse)
@@ -48,16 +40,7 @@ if ruta_embalse:
 else:
     st.sidebar.error("❌ No se encontró datos_embalse_completo.csv")
     df_embalse = pd.DataFrame()
-
-pagina = st.radio(
-    "📋 Navegación",
-    ["1️⃣ Esquema del sistema", "2️⃣ Captaciones 2024", "3️⃣ Tendencia histórica 2012–2025",
-     "4️⃣ Embalse", "5️⃣ Plantas de tratamiento", "6️⃣ Resumen ejecutivo",
-     "7️⃣ Eficiencia de Plantas (COT)", "8️⃣ Hidrología (Embalse y afluentes) 2023",
-     "9️⃣ Laboratorio amb 2026 Embalse", "🔟 Monitoreo Cuenca Suratá"],
-    horizontal=True
-)
-
+pagina = st.radio("📋 Navegación", ["1️⃣ Esquema del sistema", "2️⃣ Captaciones 2024", "3️⃣ Tendencia histórica 2012–2025", "4️⃣ Embalse", "5️⃣ Plantas de tratamiento", "6️⃣ Resumen ejecutivo", "7️⃣ Eficiencia de Plantas (COT)", "8️⃣ Hidrología (Embalse y afluentes) 2023", "9️⃣ Laboratorio amb 2026 Embalse", "🔟 Monitoreo Cuenca Suratá"], horizontal=True)
 if pagina == "1️⃣ Esquema del sistema":
     st.subheader("🧠 Esquema hidrológico del sistema AMB")
     if os.path.exists("assets/iconos/esquema_hidrologico.png"):
@@ -72,7 +55,6 @@ if pagina == "1️⃣ Esquema del sistema":
     - **Río Frío** → Planta Florida
     - **Río Suratá** → Planta Bosconia
     """)
-
 elif pagina == "2️⃣ Captaciones 2024":
     st.subheader("📍 Calidad de agua en captaciones 2024")
     if not df_captaciones.empty:
@@ -95,7 +77,6 @@ elif pagina == "2️⃣ Captaciones 2024":
             col3.metric("Máximo", f"{df_filtrado['Valor'].max():.1f}")
     else:
         st.error("No se pudieron cargar los datos de captaciones")
-
 elif pagina == "3️⃣ Tendencia histórica 2012–2025":
     st.subheader("📈 Evolución de E.coli y turbiedad")
     if not df_historico.empty:
@@ -109,7 +90,6 @@ elif pagina == "3️⃣ Tendencia histórica 2012–2025":
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.error("No se pudieron cargar los datos históricos")
-
 elif pagina == "4️⃣ Embalse":
     st.subheader("💧 Monitoreo Histórico del Embalse (2015-2025)")
     if not df_embalse.empty:
@@ -141,7 +121,6 @@ elif pagina == "4️⃣ Embalse":
     else:
         st.error("No se pudieron cargar los datos del embalse")
     st.caption("📌 Datos históricos: 2015-2017 (Excel) | Datos recientes: 2024-2025 | 2026 en pestaña específica")
-
 elif pagina == "5️⃣ Plantas de tratamiento":
     st.subheader("🏭 Calidad del agua que llega a las plantas")
     col1, col2, col3 = st.columns(3)
@@ -151,7 +130,6 @@ elif pagina == "5️⃣ Plantas de tratamiento":
         st.metric("Planta Florida", "Recibe Río Frío", "Monitoreo continuo")
     with col3:
         st.metric("Planta Bosconia", "Recibe Río Suratá", "Monitoreo continuo")
-
 elif pagina == "6️⃣ Resumen ejecutivo":
     st.subheader("📊 Resumen de calidad de agua 2024")
     col1, col2, col3, col4 = st.columns(4)
@@ -171,7 +149,6 @@ elif pagina == "6️⃣ Resumen ejecutivo":
             color = "🟢" if valor > 80 else "🟡" if valor > 60 else "🔴"
             st.write(f"{color} **{captacion}**: {valor:.1f}")
         st.success("✅ El agua de las captaciones cumple con norma de calidad en 2024")
-
 elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
     st.subheader("📊 Carbono Orgánico Total (COT) - Resolución 2115/2007")
     st.caption("🔹 **Norma Resolución 2115: COT en AGUA TRATADA ≤ 5.0 mg/L** | 🔹 **Eficiencia objetivo: > 30% de remoción**")
@@ -215,7 +192,6 @@ elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
             st.warning("No hay suficientes datos (crudo y tratado) para calcular eficiencia")
     else:
         st.warning("No hay datos para la planta seleccionada")
-
 elif pagina == "8️⃣ Hidrología (Embalse y afluentes) 2023":
     st.subheader("🧬 Hidrobiología del Embalse - ECOSAM 2023")
     st.caption("Datos de ECOSAM S.A.S. (Caracterización hidrobiológica, junio 2023)")
@@ -237,7 +213,6 @@ elif pagina == "8️⃣ Hidrología (Embalse y afluentes) 2023":
     with st.expander("📋 Ver todos los datos hidrobiológicos"):
         st.dataframe(datos_hidro, use_container_width=True)
     st.caption("📌 Fuente: ECOSAM S.A.S. - Caracterización hidrobiológica del embalse de Bucaramanga, junio 2023")
-
 elif pagina == "9️⃣ Laboratorio amb 2026 Embalse":
     st.subheader("🔬 Monitoreos Laboratorio amb 2026 - Embalse")
     st.caption("📌 Datos de muestras compuestas superficiales (integra superficial + profundidad)")
@@ -264,7 +239,6 @@ elif pagina == "9️⃣ Laboratorio amb 2026 Embalse":
             st.warning("No hay datos para la combinación seleccionada")
     else:
         st.info("No hay datos disponibles para 2026")
-
 elif pagina == "🔟 Monitoreo Cuenca Suratá":
     st.subheader("🏔️ Monitoreo de Calidad de Agua - Cuenca Suratá")
     st.caption("📌 Zona con influencia minera | Monitoreo mensual | Datos de enero 2026")
@@ -294,6 +268,5 @@ elif pagina == "🔟 Monitoreo Cuenca Suratá":
         st.metric("Mercurio", "✓ Excepto La Baja (0.00053)", "< 0.002 mg/L")
     with col3:
         st.metric("Plomo", "✓ Todos < 0.05 mg/L", "Cumple norma")
-
 st.markdown("---")
 st.caption(f"💧 Actualizado: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}")
