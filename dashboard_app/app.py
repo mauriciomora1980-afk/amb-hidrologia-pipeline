@@ -19,6 +19,7 @@ st.sidebar.write(f"Directorio actual: {os.getcwd()}")
 # Buscar los archivos
 ruta_historico = None
 ruta_captaciones = None
+ruta_embalse = None
 
 for root, dirs, files in os.walk('.'):
     for file in files:
@@ -26,6 +27,8 @@ for root, dirs, files in os.walk('.'):
             ruta_historico = os.path.join(root, file)
         if file == 'MASTER_DATA_COMPLETO.csv':
             ruta_captaciones = os.path.join(root, file)
+        if file == 'datos_embalse_completo.csv':
+            ruta_embalse = os.path.join(root, file)
 
 if ruta_historico:
     st.sidebar.success(f"✅ Histórico: {ruta_historico}")
@@ -40,13 +43,6 @@ if ruta_captaciones:
 else:
     st.sidebar.error("❌ No se encontró MASTER_DATA_COMPLETO.csv")
     df_captaciones = pd.DataFrame()
-
-# Cargar datos del embalse
-ruta_embalse = None
-for root, dirs, files in os.walk('.'):
-    for file in files:
-        if file == 'datos_embalse_completo.csv':
-            ruta_embalse = os.path.join(root, file)
 
 if ruta_embalse:
     st.sidebar.success(f"✅ Embalse: {ruta_embalse}")
@@ -103,8 +99,7 @@ elif pagina == "2️⃣ Captaciones 2024":
         st.caption("- **ICOpH**: pH")
         st.caption("- **ICOTRO**: Eutrofización")
         
-        df_filtrado = df_captaciones[(df_captaciones['Captacion'] == captacion) & 
-                                       (df_captaciones['Parametro'] == parametro)]
+        df_filtrado = df_captaciones[(df_captaciones['Captacion'] == captacion) & (df_captaciones['Parametro'] == parametro)]
         
         if not df_filtrado.empty:
             fig = px.line(df_filtrado, x='Fecha', y='Valor', markers=True,
@@ -128,8 +123,7 @@ elif pagina == "3️⃣ Tendencia histórica 2012–2025":
         with col2:
             parametro = st.selectbox("Parámetro", df_historico['Parametro'].unique())
         
-        df_filtrado = df_historico[(df_historico['Sistema'] == sistema) & 
-                                    (df_historico['Parametro'] == parametro)]
+        df_filtrado = df_historico[(df_historico['Sistema'] == sistema) & (df_historico['Parametro'] == parametro)]
         
         fig = px.line(df_filtrado, x='Año', y='Valor', markers=True,
                       title=f'{parametro} - {sistema} (2012-2025)')
@@ -220,25 +214,20 @@ elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
     st.subheader("📊 Carbono Orgánico Total (COT) - Resolución 2115/2007")
     st.caption("🔹 **Norma Resolución 2115: COT en AGUA TRATADA ≤ 5.0 mg/L** | 🔹 **Eficiencia objetivo: > 30% de remoción**")
     
-    # Cargar datos COT
     df_cot = pd.read_csv('data/datos_cot_plantas.csv')
     df_cot['Fecha_Muestra'] = pd.to_datetime(df_cot['Fecha_Muestra'])
     
-    # Selector de planta
     plantas = sorted(df_cot['Planta'].unique())
     planta_sel = st.selectbox("Seleccionar Planta", plantas, index=0)
     
-    # Filtrar datos
     df_planta = df_cot[df_cot['Planta'] == planta_sel].copy()
     
     if not df_planta.empty:
-        # Crear pivot para eficiencia
         df_pivot = df_planta.pivot(index='Fecha_Muestra', columns='Tipo_Muestra', values='Resultado_COT_mgL').dropna()
         
         if not df_pivot.empty and 'AGUA CRUDA' in df_pivot.columns and 'AGUA TRATADA' in df_pivot.columns:
             df_pivot['Eficiencia (%)'] = ((df_pivot['AGUA CRUDA'] - df_pivot['AGUA TRATADA']) / df_pivot['AGUA CRUDA']) * 100
             
-            # Métricas
             col1, col2, col3 = st.columns(3)
             with col1:
                 promedio_tratada = df_pivot['AGUA TRATADA'].mean()
@@ -250,29 +239,24 @@ elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
                 cumple_muestras = (df_pivot['AGUA TRATADA'] <= 5.0).sum()
                 st.metric("Cumplimiento Norma", f"{cumple_muestras}/{len(df_pivot)} muestras")
             
-            # Gráfico de líneas
             fig = px.line(df_planta, x='Fecha_Muestra', y='Resultado_COT_mgL', color='Tipo_Muestra',
                           title=f'COT - {planta_sel} (Crudo vs Tratado)',
                           markers=True)
             fig.add_hline(y=5.0, line_dash="dash", line_color="red", annotation_text="Límite Norma 5.0 mg/L")
             st.plotly_chart(fig, use_container_width=True)
             
-            # Tabla de eficiencia
             st.subheader("📈 Eficiencia de Remoción de COT")
             df_mostrar = df_pivot[['AGUA CRUDA', 'AGUA TRATADA', 'Eficiencia (%)']].copy()
             df_mostrar['Cumple'] = df_pivot['AGUA TRATADA'] <= 5.0
             df_mostrar['Cumple'] = df_mostrar['Cumple'].map({True: '✅ Cumple', False: '❌ No cumple'})
             st.dataframe(df_mostrar, use_container_width=True)
             
-            # Gráfico de eficiencia
             fig_ef = px.bar(df_pivot, x=df_pivot.index, y='Eficiencia (%)', 
                             title=f'Eficiencia de Remoción - {planta_sel}',
                             color='Eficiencia (%)', color_continuous_scale=['red', 'yellow', 'green'])
             fig_ef.add_hline(y=30, line_dash="dash", line_color="green", annotation_text="Eficiencia objetivo 30%")
             st.plotly_chart(fig_ef, use_container_width=True)
             
-            # Resumen por planta
-            st.subheader("🏭 Resumen de Cumplimiento por Planta")
             resumen = df_cot.groupby(['Planta', 'Tipo_Muestra'])['Resultado_COT_mgL'].mean().unstack()
             if 'AGUA CRUDA' in resumen.columns and 'AGUA TRATADA' in resumen.columns:
                 resumen['Eficiencia (%)'] = ((resumen['AGUA CRUDA'] - resumen['AGUA TRATADA']) / resumen['AGUA CRUDA']) * 100
@@ -330,7 +314,6 @@ elif pagina == "9️⃣ Laboratorio amb 2026 Embalse":
     st.subheader("🔬 Monitoreos Laboratorio amb 2026 - Embalse")
     st.caption("📌 Datos de muestras compuestas superficiales (integra superficial + profundidad)")
     
-    # Cargar datos del embalse (para 2026)
     df_2026 = df_embalse[df_embalse['Fecha'].dt.year == 2026]
     
     if not df_2026.empty:
@@ -367,7 +350,6 @@ elif pagina == "🔟 Monitoreo Cuenca Suratá":
     st.subheader("🏔️ Monitoreo de Calidad de Agua - Cuenca Suratá")
     st.caption("📌 Zona con influencia minera | Monitoreo mensual | Datos de enero 2026")
     
-    # Datos reales de enero 2026
     datos_surata = pd.DataFrame({
         'Sitio': ['Río Charta', 'Pánaga', 'Uña de Gato', 'Río Vetas', 'Quebrada La Baja'],
         'pH': [8.14, 7.92, 8.00, 7.22, 7.68],
@@ -380,24 +362,19 @@ elif pagina == "🔟 Monitoreo Cuenca Suratá":
         'Plomo (mg/L)': [0.037, 0.015, 0.0079, 0.0091, 0.071],
     })
     
-    # Selector de parámetro
     parametros = ['pH', 'Turbiedad (NTU)', 'Alcalinidad (mg CaCO3/L)', 'Arsénico (mg/L)', 'Plomo (mg/L)']
     parametro_sel = st.selectbox("📊 Seleccionar parámetro", parametros)
     
-    # Gráfico de barras
     fig = px.bar(datos_surata, x='Sitio', y=parametro_sel, 
                  title=f'{parametro_sel} en la Cuenca Suratá (enero 2026)',
                  color=parametro_sel, color_continuous_scale='Blues')
     st.plotly_chart(fig, use_container_width=True)
     
-    # Tabla completa
     with st.expander("📋 Ver todos los datos"):
         st.dataframe(datos_surata, use_container_width=True)
     
-    # Nota
     st.caption("📌 Nota: Río Vetas y Quebrada La Baja no reportan datos de coliformes en este monitoreo")
     
-    # Cumplimiento normativo
     st.subheader("✅ Cumplimiento Normativo (Decreto 1594/84)")
     col1, col2, col3 = st.columns(3)
     with col1:
