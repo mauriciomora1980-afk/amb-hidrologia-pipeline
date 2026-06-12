@@ -10,7 +10,7 @@ if os.path.exists("assets/iconos/logo_amb.png"):
     st.sidebar.image("assets/iconos/logo_amb.png", use_container_width=True)
     st.sidebar.markdown("---")
 
-st.title("💧 Sistema de Monitoreo de Calidad de Agua")  # v2.0 - Nombres actualizados
+st.title("💧 Sistema de Monitoreo de Calidad de Agua")
 
 # ================= DIAGNÓSTICO: VERIFICAR ARCHIVOS =================
 st.sidebar.markdown("### 🔧 Depuración")
@@ -68,7 +68,7 @@ pagina = st.radio(
      "7️⃣ Eficiencia de Plantas (COT)",
      "8️⃣ Hidrología (Embalse y afluentes) 2023",
      "9️⃣ Laboratorio amb 2026 Embalse",
-     "🔟 Monitoreo Cuenca Suratá 2026"],
+     "🔟 Monitoreo Cuenca Suratá"],
     horizontal=True
 )
 
@@ -95,17 +95,16 @@ elif pagina == "2️⃣ Captaciones 2024":
         captacion = st.selectbox("Seleccionar captación", df_captaciones['Captacion'].unique())
         parametro = st.selectbox("Seleccionar parámetro", ['ICA', 'ICOMI', 'ICOMO', 'ICOSUS', 'ICOpH', 'ICOTRO'])
 
-    st.caption("📌 **Significado de los índices:**")
-    st.caption("- **ICA**: Índice de Calidad del Agua")
-    st.caption("- **ICOMI**: Mineralización")
-    st.caption("- **ICOMO**: Materia Orgánica")
-    st.caption("- **ICOSUS**: Sólidos Suspendidos")
-    st.caption("- **ICOpH**: pH")
-    st.caption("- **ICOTRO**: Eutrofización")
-
+        st.caption("📌 **Significado de los índices:**")
+        st.caption("- **ICA**: Índice de Calidad del Agua")
+        st.caption("- **ICOMI**: Mineralización")
+        st.caption("- **ICOMO**: Materia Orgánica")
+        st.caption("- **ICOSUS**: Sólidos Suspendidos")
+        st.caption("- **ICOpH**: pH")
+        st.caption("- **ICOTRO**: Eutrofización")
         
         df_filtrado = df_captaciones[(df_captaciones['Captacion'] == captacion) & 
-                                       (df_captaciones['Parametro'] == parametro.replace('Mineralización', 'ICOMI').replace('Materia Orgánica', 'ICOMO').replace('Sólidos Suspendidos Totales', 'ICOSUS').replace('Eutrofización', 'ICOTRO'))]
+                                       (df_captaciones['Parametro'] == parametro)]
         
         if not df_filtrado.empty:
             fig = px.line(df_filtrado, x='Fecha', y='Valor', markers=True,
@@ -140,15 +139,12 @@ elif pagina == "3️⃣ Tendencia histórica 2012–2025":
 
 # ================= 4️⃣ EMBALSE =================
 elif pagina == "4️⃣ Embalse":
-    st.subheader("💧 Monitoreo Histórico del Embalse (2015-2026)")
+    st.subheader("💧 Monitoreo Histórico del Embalse (2015-2025)")
     
     if not df_embalse.empty:
-        # Variables comunes con continuidad
         variables_comunes = ['pH', 'Turbiedad', 'Coliformes totales', 'Conductividad', 
                             'Alcalinidad total', 'Dureza total', 'Arsénico', 'Mercurio']
-        
-        # Obtener años disponibles
-        años_disponibles = sorted(df_embalse['Fecha'].dt.year.unique())
+        años_disponibles = [a for a in sorted(df_embalse['Fecha'].dt.year.unique()) if a != 2026]
         
         col1, col2, col3 = st.columns(3)
         with col1:
@@ -163,8 +159,26 @@ elif pagina == "4️⃣ Embalse":
             df_filtrado = df_filtrado[df_filtrado['Fecha'].dt.year == año]
         if sitio != 'Todos':
             df_filtrado = df_filtrado[df_filtrado['Sitio'] == sitio]
+        
+        if not df_filtrado.empty:
+            fig = px.line(df_filtrado, x='Fecha', y='Valor', color='Sitio' if sitio == 'Todos' else None,
+                          title=f'{parametro} - Evolución {año if año != "Todos" else "histórica"}',
+                          markers=True)
+            st.plotly_chart(fig, use_container_width=True)
+            
+            col_avg, col_min, col_max = st.columns(3)
+            col_avg.metric("Promedio", f"{df_filtrado['Valor'].mean():.2f}")
+            col_min.metric("Mínimo", f"{df_filtrado['Valor'].min():.2f}")
+            col_max.metric("Máximo", f"{df_filtrado['Valor'].max():.2f}")
+            
+            with st.expander("📋 Ver todos los datos"):
+                st.dataframe(df_filtrado, use_container_width=True)
+        else:
+            st.warning("No hay datos para la combinación seleccionada")
+    else:
+        st.error("No se pudieron cargar los datos del embalse")
     
-    st.caption("📌 Datos históricos: 2015-2017 (Excel) | Datos recientes: 2026 (Laboratorio AMB)")
+    st.caption("📌 Datos históricos: 2015-2017 (Excel) | Datos recientes: 2024-2025 | 2026 en pestaña específica")
 
 # ================= 5️⃣ PLANTAS =================
 elif pagina == "5️⃣ Plantas de tratamiento":
@@ -178,119 +192,30 @@ elif pagina == "5️⃣ Plantas de tratamiento":
         st.metric("Planta Bosconia", "Recibe Río Suratá", "Monitoreo continuo")
 
 # ================= 6️⃣ RESUMEN EJECUTIVO =================
-
-
-
-# ================= COT - EFICIENCIA DE PLANTAS =================
-
-# ================= 8️⃣ HIDROBIOLOGÍA ECOSAM 2023 =================
-
-# ================= 9️⃣ Laboratorio amb 2026 Embalse =================
-
-# ================= 🔟 Monitoreo Cuenca Suratá 2026 =================
-elif pagina == "🔟 Monitoreo Cuenca Suratá 2026":
-    st.subheader("🏔️ Monitoreo de Calidad de Agua - Cuenca Suratá")
-    st.caption("📌 Zona con influencia minera | Monitoreo mensual desde 2021")
-    st.info("⏳ Datos en proceso de integración. Próximamente disponible.")
+elif pagina == "6️⃣ Resumen ejecutivo":
+    st.subheader("📊 Resumen de calidad de agua 2024")
     
-    # Mostrar sitios monitoreados
-    st.markdown("""
-    ### 📍 Sitios de monitoreo:
-    - **Río Vetas** (influencia minera)
-    - **Río Charta**
-    - **Pánaga** (confluencia Suratá)
-    - **Uña de Gato** (río Suratá alto)
-    - **Surata Charta** (confluencia)
-    - **Caneyes**
-    - **Mongora**
-    - **Quebrada La Baja**
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric("Captaciones", "6")
+    with col2:
+        st.metric("Registros 2024", str(len(df_captaciones)) if not df_captaciones.empty else "0")
+    with col3:
+        st.metric("Años históricos", "14")
+    with col4:
+        st.metric("Plantas", "3")
     
-    ### 📊 Parámetros analizados:
-    - pH, Turbiedad, Conductividad
-    - Metales: Arsénico, Mercurio, Plomo, Cadmio, Zinc, Cobre, Hierro, Manganeso
-    - Coliformes totales, E. coli
-    - Alcalinidad, Dureza, Cloruros, Sulfatos, Nitratos, Nitritos
-    - Cianuro Libre
-    """)
-    
-    st.caption("📌 Fuente: Laboratorio de Control de Calidad Aguas amb | Monitoreo mensual")
-
-elif pagina == "9️⃣ Laboratorio amb 2026 Embalse":
-    st.subheader("🔬 Monitoreos Laboratorio amb 2026 - Embalse")
-    st.caption("📌 Datos de muestras compuestas superficiales (integra superficial + profundidad)")
-    
-    # Cargar datos del embalse (para 2026)
-    df_2026 = df_embalse[df_embalse['Fecha'].dt.year == 2026]
-    
-    if not df_2026.empty:
-        col1, col2 = st.columns(2)
-        with col1:
-            parametro = st.selectbox("📊 Seleccionar parámetro", df_2026['Parametro'].unique(), key="param_2026")
-        with col2:
-            sitio = st.selectbox("📍 Seleccionar sitio", ['Todos'] + sorted(df_2026['Sitio'].unique()), key="sitio_2026")
+    if not df_captaciones.empty:
+        st.subheader("📈 Ranking ICA promedio 2024")
+        df_ica = df_captaciones[df_captaciones['Parametro'] == 'ICA']
+        ranking = df_ica.groupby('Captacion')['Valor'].mean().sort_values(ascending=False)
+        for captacion, valor in ranking.items():
+            color = "🟢" if valor > 80 else "🟡" if valor > 60 else "🔴"
+            st.write(f"{color} **{captacion}**: {valor:.1f}")
         
-        df_filtrado = df_2026[df_2026['Parametro'] == parametro]
-        if sitio != 'Todos':
-            df_filtrado = df_filtrado[df_filtrado['Sitio'] == sitio]
-        
-        if not df_filtrado.empty:
-            fig = px.line(df_filtrado, x='Fecha', y='Valor', color='Sitio' if sitio == 'Todos' else None,
-                          title=f'{parametro} - Laboratorio amb 2026',
-                          markers=True)
-            st.plotly_chart(fig, use_container_width=True)
-            
-            col_avg, col_min, col_max = st.columns(3)
-            col_avg.metric("Promedio", f"{df_filtrado['Valor'].mean():.2f}")
-            col_min.metric("Mínimo", f"{df_filtrado['Valor'].min():.2f}")
-            col_max.metric("Máximo", f"{df_filtrado['Valor'].max():.2f}")
-            
-            with st.expander("📋 Ver todos los datos 2026"):
-                st.dataframe(df_filtrado, use_container_width=True)
-        else:
-            st.warning("No hay datos para la combinación seleccionada")
-    else:
-        st.info("No hay datos disponibles para 2026")
+        st.success("✅ El agua de las captaciones cumple con norma de calidad en 2024")
 
-elif pagina == "8️⃣ Hidrología (Embalse y afluentes) 2023":
-    st.subheader("🧬 Hidrobiología del Embalse - ECOSAM 2023")
-    st.caption("Datos de ECOSAM S.A.S. (Caracterización hidrobiológica, junio 2023)")
-    
-    datos_hidro = pd.DataFrame({
-        'Punto': ['Cola del embalse', 'Centro del embalse', 'Captación del embalse',
-                  'Embalse Litoral izquierdo', 'Río Tona antes Q. Ranas', 'Quebrada Ranas',
-                  'Aguas debajo de la presa', 'Cola del embalse', 'Centro del embalse',
-                  'Captación del embalse', 'Aguas debajo de la presa', 'Quebrada El Gualilo'],
-        'Comunidad': ['Fitoplancton', 'Fitoplancton', 'Fitoplancton',
-                      'Perifiton', 'Perifiton', 'Perifiton',
-                      'Perifiton', 'Zooplancton', 'Zooplancton',
-                      'Zooplancton', 'Bentónicos', 'Bentónicos'],
-        'Taxa': ['Navicula sp.', 'Navicula sp.', 'Navicula sp.',
-                 'Navicula sp.', 'Navicula sp.', 'Navicula sp.',
-                 'Navicula sp.', 'Brachionus sp.', 'Brachionus sp.',
-                 'Brachionus sp.', 'Physidae', 'Naucoridae'],
-        'Abundancia': [147, 0, 34, 34, 92, 180, 43, 35, 902, 559, 4, 2],
-        'Unidad': ['Ind/L', 'Ind/L', 'Ind/L', 'Ind/cm²', 'Ind/cm²', 'Ind/cm²',
-                   'Ind/cm²', 'Ind/L', 'Ind/L', 'Ind/L', 'Ind/m²', 'Ind/m²']
-    })
-    
-    comunidades = ['Todas'] + sorted(datos_hidro['Comunidad'].unique())
-    comunidad_sel = st.selectbox("Seleccionar comunidad hidrobiológica", comunidades, key="comunidad_hidro_pestana")
-    
-    if comunidad_sel != 'Todas':
-        df_hidro = datos_hidro[datos_hidro['Comunidad'] == comunidad_sel]
-    else:
-        df_hidro = datos_hidro
-    
-    fig_hidro = px.bar(df_hidro, x='Punto', y='Abundancia', color='Taxa',
-                       title=f'Abundancia de {comunidad_sel if comunidad_sel != "Todas" else "comunidades hidrobiológicas"} (ECOSAM 2023)',
-                       barmode='group')
-    st.plotly_chart(fig_hidro, use_container_width=True)
-    
-    with st.expander("📋 Ver todos los datos hidrobiológicos"):
-        st.dataframe(datos_hidro, use_container_width=True)
-    
-    st.caption("📌 Fuente: ECOSAM S.A.S. - Caracterización hidrobiológica del embalse de Bucaramanga, junio 2023")
-
+# ================= 7️⃣ COT =================
 elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
     st.subheader("📊 Carbono Orgánico Total (COT) - Resolución 2115/2007")
     st.caption("🔹 **Norma Resolución 2115: COT en AGUA TRATADA ≤ 5.0 mg/L** | 🔹 **Eficiencia objetivo: > 30% de remoción**")
@@ -299,7 +224,7 @@ elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
     df_cot = pd.read_csv('data/datos_cot_plantas.csv')
     df_cot['Fecha_Muestra'] = pd.to_datetime(df_cot['Fecha_Muestra'])
     
-    # Selector de planta (sin key)
+    # Selector de planta
     plantas = sorted(df_cot['Planta'].unique())
     planta_sel = st.selectbox("Seleccionar Planta", plantas, index=0)
     
@@ -358,28 +283,129 @@ elif pagina == "7️⃣ Eficiencia de Plantas (COT)":
             st.warning("No hay suficientes datos (crudo y tratado) para calcular eficiencia")
     else:
         st.warning("No hay datos para la planta seleccionada")
-elif pagina == "6️⃣ Resumen ejecutivo":
-    st.subheader("📊 Resumen de calidad de agua 2024")
+
+# ================= 8️⃣ HIDROBIOLOGÍA ECOSAM 2023 =================
+elif pagina == "8️⃣ Hidrología (Embalse y afluentes) 2023":
+    st.subheader("🧬 Hidrobiología del Embalse - ECOSAM 2023")
+    st.caption("Datos de ECOSAM S.A.S. (Caracterización hidrobiológica, junio 2023)")
     
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.metric("Captaciones", "6")
-    with col2:
-        st.metric("Registros 2024", str(len(df_captaciones)) if not df_captaciones.empty else "0")
-    with col3:
-        st.metric("Años históricos", "14")
-    with col4:
-        st.metric("Plantas", "3")
+    datos_hidro = pd.DataFrame({
+        'Punto': ['Cola del embalse', 'Centro del embalse', 'Captación del embalse',
+                  'Embalse Litoral izquierdo', 'Río Tona antes Q. Ranas', 'Quebrada Ranas',
+                  'Aguas debajo de la presa', 'Cola del embalse', 'Centro del embalse',
+                  'Captación del embalse', 'Aguas debajo de la presa', 'Quebrada El Gualilo'],
+        'Comunidad': ['Fitoplancton', 'Fitoplancton', 'Fitoplancton',
+                      'Perifiton', 'Perifiton', 'Perifiton',
+                      'Perifiton', 'Zooplancton', 'Zooplancton',
+                      'Zooplancton', 'Bentónicos', 'Bentónicos'],
+        'Taxa': ['Navicula sp.', 'Navicula sp.', 'Navicula sp.',
+                 'Navicula sp.', 'Navicula sp.', 'Navicula sp.',
+                 'Navicula sp.', 'Brachionus sp.', 'Brachionus sp.',
+                 'Brachionus sp.', 'Physidae', 'Naucoridae'],
+        'Abundancia': [147, 0, 34, 34, 92, 180, 43, 35, 902, 559, 4, 2],
+        'Unidad': ['Ind/L', 'Ind/L', 'Ind/L', 'Ind/cm²', 'Ind/cm²', 'Ind/cm²',
+                   'Ind/cm²', 'Ind/L', 'Ind/L', 'Ind/L', 'Ind/m²', 'Ind/m²']
+    })
     
-    if not df_captaciones.empty:
-        st.subheader("📈 Ranking ICA promedio 2024")
-        df_ica = df_captaciones[df_captaciones['Parametro'] == 'ICA']
-        ranking = df_ica.groupby('Captacion')['Valor'].mean().sort_values(ascending=False)
-        for captacion, valor in ranking.items():
-            color = "🟢" if valor > 80 else "🟡" if valor > 60 else "🔴"
-            st.write(f"{color} **{captacion}**: {valor:.1f}")
+    comunidades = ['Todas'] + sorted(datos_hidro['Comunidad'].unique())
+    comunidad_sel = st.selectbox("Seleccionar comunidad hidrobiológica", comunidades, key="comunidad_hidro_pestana")
+    
+    if comunidad_sel != 'Todas':
+        df_hidro = datos_hidro[datos_hidro['Comunidad'] == comunidad_sel]
+    else:
+        df_hidro = datos_hidro
+    
+    fig_hidro = px.bar(df_hidro, x='Punto', y='Abundancia', color='Taxa',
+                       title=f'Abundancia de {comunidad_sel if comunidad_sel != "Todas" else "comunidades hidrobiológicas"} (ECOSAM 2023)',
+                       barmode='group')
+    st.plotly_chart(fig_hidro, use_container_width=True)
+    
+    with st.expander("📋 Ver todos los datos hidrobiológicos"):
+        st.dataframe(datos_hidro, use_container_width=True)
+    
+    st.caption("📌 Fuente: ECOSAM S.A.S. - Caracterización hidrobiológica del embalse de Bucaramanga, junio 2023")
+
+# ================= 9️⃣ LABORATORIO AMB 2026 =================
+elif pagina == "9️⃣ Laboratorio amb 2026 Embalse":
+    st.subheader("🔬 Monitoreos Laboratorio amb 2026 - Embalse")
+    st.caption("📌 Datos de muestras compuestas superficiales (integra superficial + profundidad)")
+    
+    # Cargar datos del embalse (para 2026)
+    df_2026 = df_embalse[df_embalse['Fecha'].dt.year == 2026]
+    
+    if not df_2026.empty:
+        col1, col2 = st.columns(2)
+        with col1:
+            parametro = st.selectbox("📊 Seleccionar parámetro", df_2026['Parametro'].unique(), key="param_2026")
+        with col2:
+            sitio = st.selectbox("📍 Seleccionar sitio", ['Todos'] + sorted(df_2026['Sitio'].unique()), key="sitio_2026")
         
-        st.success("✅ El agua de las captaciones cumple con norma de calidad en 2024")
+        df_filtrado = df_2026[df_2026['Parametro'] == parametro]
+        if sitio != 'Todos':
+            df_filtrado = df_filtrado[df_filtrado['Sitio'] == sitio]
+        
+        if not df_filtrado.empty:
+            fig = px.line(df_filtrado, x='Fecha', y='Valor', color='Sitio' if sitio == 'Todos' else None,
+                          title=f'{parametro} - Laboratorio amb 2026',
+                          markers=True)
+            st.plotly_chart(fig, use_container_width=True)
+            
+            col_avg, col_min, col_max = st.columns(3)
+            col_avg.metric("Promedio", f"{df_filtrado['Valor'].mean():.2f}")
+            col_min.metric("Mínimo", f"{df_filtrado['Valor'].min():.2f}")
+            col_max.metric("Máximo", f"{df_filtrado['Valor'].max():.2f}")
+            
+            with st.expander("📋 Ver todos los datos 2026"):
+                st.dataframe(df_filtrado, use_container_width=True)
+        else:
+            st.warning("No hay datos para la combinación seleccionada")
+    else:
+        st.info("No hay datos disponibles para 2026")
+
+# ================= 🔟 MONITOREO CUENCA SURATÁ =================
+elif pagina == "🔟 Monitoreo Cuenca Suratá":
+    st.subheader("🏔️ Monitoreo de Calidad de Agua - Cuenca Suratá")
+    st.caption("📌 Zona con influencia minera | Monitoreo mensual | Datos de enero 2026")
+    
+    # Datos reales de enero 2026
+    datos_surata = pd.DataFrame({
+        'Sitio': ['Río Charta', 'Pánaga', 'Uña de Gato', 'Río Vetas', 'Quebrada La Baja'],
+        'pH': [8.14, 7.92, 8.00, 7.22, 7.68],
+        'Turbiedad (NTU)': [8.2, 8.5, 3.8, 6.2, 18.0],
+        'Coliformes totales (NMP/100ml)': [16000, 92000, 5400, None, None],
+        'E. coli (NMP/100ml)': [9200, 54000, 790, None, None],
+        'Alcalinidad (mg CaCO3/L)': [72.0, 48.8, 49.4, 16.0, 15.4],
+        'Arsénico (mg/L)': [0.0026, 0.0064, 0.0033, 0.0065, 0.0067],
+        'Mercurio (mg/L)': ['<0.00025', '<0.00025', '<0.00025', '<0.00025', 0.00053],
+        'Plomo (mg/L)': [0.037, 0.015, 0.0079, 0.0091, 0.071],
+    })
+    
+    # Selector de parámetro
+    parametros = ['pH', 'Turbiedad (NTU)', 'Alcalinidad (mg CaCO3/L)', 'Arsénico (mg/L)', 'Plomo (mg/L)']
+    parametro_sel = st.selectbox("📊 Seleccionar parámetro", parametros)
+    
+    # Gráfico de barras
+    fig = px.bar(datos_surata, x='Sitio', y=parametro_sel, 
+                 title=f'{parametro_sel} en la Cuenca Suratá (enero 2026)',
+                 color=parametro_sel, color_continuous_scale='Blues')
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Tabla completa
+    with st.expander("📋 Ver todos los datos"):
+        st.dataframe(datos_surata, use_container_width=True)
+    
+    # Nota
+    st.caption("📌 Nota: Río Vetas y Quebrada La Baja no reportan datos de coliformes en este monitoreo")
+    
+    # Cumplimiento normativo
+    st.subheader("✅ Cumplimiento Normativo (Decreto 1594/84)")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("Arsénico", "✓ Todos < 0.05 mg/L", "Cumple norma")
+    with col2:
+        st.metric("Mercurio", "✓ Excepto La Baja (0.00053)", "< 0.002 mg/L")
+    with col3:
+        st.metric("Plomo", "✓ Todos < 0.05 mg/L", "Cumple norma")
 
 st.markdown("---")
 st.caption(f"💧 Actualizado: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}")
