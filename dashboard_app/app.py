@@ -10,7 +10,7 @@ if os.path.exists("assets/iconos/logo_amb.png"):
     st.sidebar.image("assets/iconos/logo_amb.png", use_container_width=True)
     st.sidebar.markdown("---")
 
-st.title("💧 Sistema de Monitoreo de Calidad de Agua")
+st.title("💧 Sistema de Monitoreo de Calidad de Agua")  # v2.0 - Nombres actualizados
 
 # ================= DIAGNÓSTICO: VERIFICAR ARCHIVOS =================
 st.sidebar.markdown("### 🔧 Depuración")
